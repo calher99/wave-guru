@@ -32,7 +32,7 @@ export const useForecastData = () => {
         );
 
         //Set initial Date
-        console.log("Date coming from API", responseWind.data);
+        // console.log("Date coming from API", responseWind.data);
         // const initdate = new Date(responseWind.data.fcst.initdate);
 
         let initdateString = responseWind.data.fcst.initdate; // "2023-07-10 00:00:00"
@@ -92,7 +92,7 @@ export const useForecastData = () => {
           }
         );
 
-        // Iterate over the hours array for responseWaves
+        console.log(responseWaves);
         // Iterate over the hours array for responseWaves
         for (let i = 0; i < responseWaves.data.fcst.hours.length; i++) {
           // Calculate the date for the current timestamp
@@ -118,8 +118,9 @@ export const useForecastData = () => {
           );
 
           if (hourObject) {
-            hourObject["SWDIR1"] = responseWaves.data.fcst.SWDIR1[i];
-            hourObject["SWELL1"] = responseWaves.data.fcst.SWELL1[i];
+            hourObject["SWELLDIR"] = responseWaves.data.fcst.DIRPW[i];
+            hourObject["SWELLHGT"] = responseWaves.data.fcst.HTSGW[i];
+            hourObject["SWELLPER"] = responseWaves.data.fcst.PERPW[i];
           } else {
             foundDay.data.push({
               id: uuid.v4(),

@@ -12,6 +12,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import { useEffect } from "react";
 
 import * as SplashScreen from "expo-splash-screen";
+import ForecastDetail from "./screens/ForecastDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +55,7 @@ function AuthenticatedStack() {
           ),
         }}
       />
+      <Stack.Screen name="ForecastDetail" component={ForecastDetail} />
     </Stack.Navigator>
   );
 }

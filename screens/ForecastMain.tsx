@@ -10,7 +10,7 @@ const ForecastMain: React.FunctionComponent = () => {
     <View style={styles.rootContainer}>
       <FlatList
         data={data}
-        renderItem={ForecastDay}
+        renderItem={({ item }) => <ForecastDay item={item} />}
         keyExtractor={(dayData) => dayData.id}
       />
     </View>

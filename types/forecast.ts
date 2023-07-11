@@ -153,8 +153,9 @@ export interface ForecastHourData {
   GUST: number;
   hour: number;
   id: string;
-  SWDIR1: number;
-  SWELL1: number;
+  SWELLDIR: number;
+  SWELLHGT: number;
+  SWELLPER: number;
   WINDDIR: number;
   WINDSPD: number;
 }

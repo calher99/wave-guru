@@ -2,12 +2,11 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { ForecastHourData } from "../../types/forecast";
 import { FontAwesome } from "@expo/vector-icons";
+import { Foundation } from "@expo/vector-icons";
 
 const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
-  console.log(dataHour);
-
   // Subtracting 133 degrees from dataHour.SWDIR1 value
-  const adjustedDegree = dataHour.SWDIR1 + 133;
+  const adjustedDegree = dataHour.SWELLDIR + 133;
 
   return (
     <View style={styles.rootContainer}>
@@ -15,11 +14,11 @@ const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
         <Text style={styles.hour}>{`${dataHour.hour}pm`}</Text>
       </View>
       <View style={styles.subContainer}>
-        <Text style={styles.data}>{dataHour.SWELL1}</Text>
+        <Text style={styles.data}>{dataHour.SWELLHGT}</Text>
         <Text style={styles.subData}>m</Text>
       </View>
       <View style={styles.subContainer}>
-        <Text style={styles.data}>10</Text>
+        <Text style={styles.data}>{dataHour.SWELLPER}</Text>
         <Text style={styles.subData}>s</Text>
       </View>
       <View style={styles.swellDirectionContainer}>
@@ -36,13 +35,32 @@ const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
             }}
           />
         </View>
-        <Text>{dataHour.SWDIR1}</Text>
+        <Text>{dataHour.SWELLDIR}</Text>
       </View>
       <View style={styles.subContainer}>
-        <Text>{dataHour.WINDSPD}</Text>
+        <View style={styles.windContainer}>
+          <View style={styles.wind}>
+            <Text style={styles.bigData}>{dataHour.WINDSPD}</Text>
+          </View>
+          <View style={styles.windGust}>
+            <Text style={styles.subData}>{dataHour.GUST}</Text>
+            <Text style={styles.smallData}>knots</Text>
+          </View>
+        </View>
       </View>
-      <View style={styles.subContainer}>
-        <Text>{dataHour.WINDDIR}</Text>
+      <View style={styles.windDirectionContainer}>
+        <Foundation
+          name="arrow-down"
+          size={24}
+          color="white"
+          style={{
+            padding: 4,
+            transform: [{ rotate: `${dataHour.WINDDIR}deg` }],
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        />
+        <Text style={styles.windDirText}>{dataHour.WINDDIR}</Text>
       </View>
     </View>
   );
@@ -56,6 +74,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   subContainer: {
+    flex: 1,
     paddingTop: 7,
     paddingBottom: 7,
     paddingLeft: 4,
@@ -83,6 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   swellDirectionContainer: {
+    flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
@@ -90,5 +110,37 @@ const styles = StyleSheet.create({
   swellIconContainer: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  windContainer: {
+    flexDirection: "row",
+    gap: 2,
+  },
+  bigData: {
+    fontSize: 17,
+    fontFamily: "System",
+    fontWeight: "700",
+  },
+  smallData: {
+    fontSize: 9,
+  },
+  wind: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  windGust: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  windDirectionContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    backgroundColor: "#3F9B0B",
+  },
+  windDirText: {
+    fontSize: 12,
+    color: "white",
   },
 });

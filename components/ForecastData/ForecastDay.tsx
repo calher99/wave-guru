@@ -1,10 +1,12 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { ForecastDayData } from "../../types/forecast";
 import { Colors } from "../../constants/styles";
 import ForecastHour from "./ForecastHour";
+import { useNavigation } from "@react-navigation/native";
 
 const ForecastDay = ({ item }: { item: ForecastDayData }) => {
+  const navigation = useNavigation();
   let dateObject = new Date(item.date); // Create a date object from the string
 
   // Get the name of the weekday
@@ -40,9 +42,23 @@ const ForecastDay = ({ item }: { item: ForecastDayData }) => {
         <Text>{dayDate}</Text>
       </View>
       <View>
-        <ForecastHour dataHour={item.data[indexToExtract[0]]} />
-        <ForecastHour dataHour={item.data[indexToExtract[1]]} />
-        <ForecastHour dataHour={item.data[indexToExtract[2]]} />
+        <Pressable
+          android_ripple={{ color: "#ccc" }}
+          style={({ pressed }) => [
+            pressed ? styles.buttonPressed : null, //Style is only applied when pressed
+          ]}
+          onPress={() => {
+            navigation.navigate("ForecastDetail", {
+              forecastData: item,
+              day: day,
+              dayDate: dayDate,
+            });
+          }}
+        >
+          <ForecastHour dataHour={item.data[indexToExtract[0]]} />
+          <ForecastHour dataHour={item.data[indexToExtract[1]]} />
+          <ForecastHour dataHour={item.data[indexToExtract[2]]} />
+        </Pressable>
       </View>
     </View>
   );
@@ -53,6 +69,7 @@ export default ForecastDay;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    // alignItems: "flex-start",
   },
   date: {
     flex: 1,
@@ -65,5 +82,8 @@ const styles = StyleSheet.create({
     fontFamily: "System",
     fontWeight: "700",
     padding: 3,
+  },
+  buttonPressed: {
+    opacity: 0.5,
   },
 });
