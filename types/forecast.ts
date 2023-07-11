@@ -1,32 +1,56 @@
+interface CoastType {
+  coast_direction: number;
+  coast_distance: number;
+  coast_model_direction: number;
+  coast_model_distance: number;
+  id_model: number;
+  land: number;
+  land_land: number;
+  land_sea: number;
+  latlon_coast: [number, number];
+  latlon_land: [number, number];
+  latlon_model_coast: [number, number];
+  latlon_sea: [number, number];
+  resolution: number;
+  resolution_hv: [number, number];
+  spot_ls: {
+    gid: number;
+    id: string;
+    land: boolean;
+    level: number;
+    ls_area: number;
+    parent_id: number;
+    sea: boolean;
+    source: string;
+  };
+  time: number;
+}
+
+interface WGModeltype {
+  hr_end: number;
+  hr_start: number;
+  hr_step: number;
+  id_model: number;
+  initdate: string;
+  initstamp: number;
+  lat: number[];
+  lon: number[];
+  maps: boolean;
+  model: string;
+  model_longname: string;
+  model_name: string;
+  priority: number;
+  pro: boolean;
+  resolution: number;
+  resolution_real: number;
+  rundef: string;
+  runs: number[];
+  wave: boolean;
+}
+
 export interface Forecast3data {
   alt: number;
-  coast: {
-    coast_direction: number;
-    coast_distance: number;
-    coast_model_direction: number;
-    coast_model_distance: number;
-    id_model: number;
-    land: number;
-    land_land: number;
-    land_sea: number;
-    latlon_coast: [number, number];
-    latlon_land: [number, number];
-    latlon_model_coast: [number, number];
-    latlon_sea: [number, number];
-    resolution: number;
-    resolution_hv: [number, number];
-    spot_ls: {
-      gid: number;
-      id: string;
-      land: boolean;
-      level: number;
-      ls_area: number;
-      parent_id: number;
-      sea: boolean;
-      source: string;
-    };
-    time: number;
-  };
+  coast: CoastType;
   default_vars: {
     [key: string]: string[];
   };
@@ -74,57 +98,11 @@ export interface Forecast3data {
   model_alt: number;
   sunrise: string;
   sunset: string;
-  wgmodel: {
-    hr_end: number;
-    hr_start: number;
-    hr_step: number;
-    id_model: number;
-    initdate: string;
-    initstamp: number;
-    lat: number[];
-    lon: number[];
-    maps: boolean;
-    model: string;
-    model_longname: string;
-    model_name: string;
-    priority: number;
-    pro: boolean;
-    resolution: number;
-    resolution_real: number;
-    rundef: string;
-    runs: number[];
-    wave: boolean;
-  };
+  wgmodel: WGModeltype;
 }
 export interface Forecast84data {
   alt: number;
-  coast: {
-    coast_direction: number;
-    coast_distance: number;
-    coast_model_direction: number;
-    coast_model_distance: number;
-    id_model: number;
-    land: number;
-    land_land: number;
-    land_sea: number;
-    latlon_coast: [number, number];
-    latlon_land: [number, number];
-    latlon_model_coast: [number, number];
-    latlon_sea: [number, number];
-    resolution: number;
-    resolution_hv: [number, number];
-    spot_ls: {
-      gid: number;
-      id: string;
-      land: boolean;
-      level: number;
-      ls_area: number;
-      parent_id: number;
-      sea: boolean;
-      source: string;
-    };
-    time: number;
-  };
+  coast: CoastType;
   default_vars: {
     [key: string]: string[];
   };
@@ -168,25 +146,21 @@ export interface Forecast84data {
   model_alt: number;
   sunrise: string;
   sunset: string;
-  wgmodel: {
-    hr_end: number;
-    hr_start: number;
-    hr_step: number;
-    id_model: number;
-    initdate: string;
-    initstamp: number;
-    lat: number[];
-    lon: number[];
-    maps: boolean;
-    model: string;
-    model_longname: string;
-    model_name: string;
-    priority: number;
-    pro: boolean;
-    resolution: number;
-    resolution_real: number;
-    rundef: string;
-    runs: number[];
-    wave: boolean;
-  };
+  wgmodel: WGModeltype;
+}
+
+export interface ForecastHourData {
+  GUST: number;
+  hour: number;
+  id: string;
+  SWDIR1: number;
+  SWELL1: number;
+  WINDDIR: number;
+  WINDSPD: number;
+}
+
+export interface ForecastDayData {
+  date: string;
+  id: string;
+  data: ForecastHourData[];
 }
