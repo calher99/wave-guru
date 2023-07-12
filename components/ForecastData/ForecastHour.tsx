@@ -8,6 +8,10 @@ const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
   // Subtracting 133 degrees from dataHour.SWDIR1 value
   const adjustedDegree = dataHour.SWELLDIR + 133;
 
+  // Convert knots to km/h
+  const windSpdKmh = Math.round(dataHour.WINDSPD * 1.852);
+  const gustKmh = Math.round(dataHour.GUST * 1.852);
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.hourContainer}>
@@ -35,16 +39,19 @@ const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
             }}
           />
         </View>
-        <Text>{dataHour.SWELLDIR}</Text>
+        <View style={styles.degrees}>
+          <Text style={styles.subData}>{dataHour.SWELLDIR}</Text>
+          <Text style={styles.subData}>º</Text>
+        </View>
       </View>
       <View style={styles.subContainer}>
         <View style={styles.windContainer}>
           <View style={styles.wind}>
-            <Text style={styles.bigData}>{dataHour.WINDSPD}</Text>
+            <Text style={styles.bigData}>{windSpdKmh}</Text>
           </View>
           <View style={styles.windGust}>
-            <Text style={styles.subData}>{dataHour.GUST}</Text>
-            <Text style={styles.smallData}>knots</Text>
+            <Text style={styles.subData}>{gustKmh}</Text>
+            <Text style={styles.smallData}>km/h</Text>
           </View>
         </View>
       </View>
@@ -111,12 +118,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  degrees: {
+    flexDirection: "row",
+  },
   windContainer: {
     flexDirection: "row",
     gap: 2,
   },
   bigData: {
-    fontSize: 17,
+    fontSize: 20,
     fontFamily: "System",
     fontWeight: "700",
   },

@@ -159,9 +159,50 @@ export interface ForecastHourData {
   WINDDIR: number;
   WINDSPD: number;
 }
+export interface TideDetails {
+  tide1Date: string;
+  height1: number;
+  tide2Date: string;
+  height2: number;
+  tide3Date: string;
+  height3: number;
+  tide4Date: string;
+  height4: number;
+}
 
 export interface ForecastDayData {
   date: string;
   id: string;
   data: ForecastHourData[];
+  tides?: TideDetails;
 }
+
+export interface TideAPIData {
+  data: TideEvent[];
+  meta: Meta;
+}
+
+type TideEvent = {
+  height: string;
+  time: string;
+  type: string;
+};
+
+type Station = {
+  distance: number;
+  lat: number;
+  lng: number;
+  name: string;
+  source: string;
+};
+
+type Meta = {
+  cost: number;
+  dailyQuota: number;
+  end: string;
+  lat: number;
+  lng: number;
+  requestCount: number;
+  start: string;
+  station: Station;
+};

@@ -25,6 +25,65 @@ const ForecastDetail = ({ route }: { route: ForecastRouteProp }) => {
         renderItem={({ item }) => <ForecastHour dataHour={item} />}
         keyExtractor={(item) => item.id}
       />
+      <View style={styles.info}>
+        <View style={styles.tideGraphContainer}></View>
+        <View style={styles.infoTable}>
+          {forecastData.tides && (
+            <View style={styles.tideInfo}>
+              <View style={styles.tidePoint}>
+                {forecastData.tides?.height1 > 0 ? (
+                  <Text>High</Text>
+                ) : (
+                  <Text>Low</Text>
+                )}
+                <Text>
+                  {forecastData.tides?.tide1Date.split("T")[1].substring(0, 5)}
+                </Text>
+                <Text>{forecastData.tides?.height1.toFixed(2)}m</Text>
+              </View>
+              <View style={styles.tidePoint}>
+                {forecastData.tides?.height2 > 0 ? (
+                  <Text>High</Text>
+                ) : (
+                  <Text>Low</Text>
+                )}
+                <Text>
+                  {forecastData.tides?.tide2Date.split("T")[1].substring(0, 5)}
+                </Text>
+                <Text>{forecastData.tides?.height2.toFixed(2)}m</Text>
+              </View>
+              <View style={styles.tidePoint}>
+                {forecastData.tides?.height3 > 0 ? (
+                  <Text>High</Text>
+                ) : (
+                  <Text>Low</Text>
+                )}
+                <Text>
+                  {forecastData.tides?.tide3Date.split("T")[1].substring(0, 5)}
+                </Text>
+                <Text>{forecastData.tides?.height3.toFixed(2)}m</Text>
+              </View>
+              <View style={styles.tidePoint}>
+                {forecastData.tides?.height4 > 0 ? (
+                  <Text>High</Text>
+                ) : (
+                  <Text>Low</Text>
+                )}
+                <Text>
+                  {forecastData.tides?.tide4Date.split("T")[1].substring(0, 5)}
+                </Text>
+                <Text>{forecastData.tides?.height4.toFixed(2)}m</Text>
+              </View>
+            </View>
+          )}
+          <View>
+            <Text>Sunrise</Text>
+            <Text>Sunset</Text>
+            <Text>Water Temp</Text>
+            <Text>Exterior Temp</Text>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
@@ -37,7 +96,6 @@ const styles = StyleSheet.create({
     // alignItems: "flex-start",
   },
   date: {
-    flex: 1,
     flexDirection: "row",
     padding: 2,
     backgroundColor: Colors.grey,
@@ -50,5 +108,19 @@ const styles = StyleSheet.create({
   },
   buttonPressed: {
     opacity: 0.5,
+  },
+  info: {},
+  tideGraphContainer: {
+    height: 100,
+    backgroundColor: "black",
+  },
+  infoTable: {
+    flexDirection: "row",
+    gap: 20,
+  },
+  tideInfo: {},
+  tidePoint: {
+    flexDirection: "row",
+    gap: 13,
   },
 });
