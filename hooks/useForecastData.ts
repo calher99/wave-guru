@@ -85,8 +85,8 @@ export const useForecastData = () => {
           params: {
             q: "forecast",
             id_model: 3,
-            rundef: "2023071300x0x240x0x240-2023071300x243x384x243x384",
-            initstr: "2023071300",
+            rundef: "2023071312x0x240x0x240-2023071300x243x384x255x384",
+            initstr: "2023071312",
             id_spot: 38441,
             WGCACHEABLE: 21600,
             cachefix: "38.93x-9.42x38",
@@ -147,8 +147,8 @@ export const useForecastData = () => {
           params: {
             q: "forecast",
             id_model: 84,
-            rundef: "2023071300x0x240x0x240-2023071300x243x384x243x384",
-            initstr: "2023071300",
+            rundef: "2023071312x0x240x0x240-2023071300x243x384x255x384",
+            initstr: "2023071312",
             id_spot: 38441,
             WGCACHEABLE: 21600,
             cachefix: "38.93x-9.42x38",
@@ -238,7 +238,7 @@ export const useForecastData = () => {
         tideDate: tideEvent.time,
       });
     });
-    console.log("porcessed Tide Data:", processedData);
+    // console.log("porcessed Tide Data:", processedData);
     return processedData;
   };
 

@@ -8,7 +8,6 @@ import { useNavigation } from "@react-navigation/native";
 const ForecastDay = ({ item }: { item: ForecastDayData }) => {
   const navigation = useNavigation();
   let dateObject = new Date(item.date); // Create a date object from the string
-
   // Get the name of the weekday
   let weekday = [
     "SUNDAY",
@@ -26,15 +25,10 @@ const ForecastDay = ({ item }: { item: ForecastDayData }) => {
     day: "2-digit",
     month: "2-digit",
   });
-  let indexToExtract = [6, 12, 18];
-  if (item.data.length === 24) {
-    indexToExtract = [7, 4, 6];
-  } else if (item.data.length === 24) {
-    indexToExtract = [6, 8, 10];
-  } else {
-    indexToExtract = [2, 4, 6];
-  }
-  // console.log(item);
+  const itemsToPrint = item.data.filter(
+    (dataPoint) =>
+      dataPoint.hour === 7 || dataPoint.hour === 13 || dataPoint.hour === 19
+  );
   return (
     <View style={styles.rootContainer}>
       <View style={styles.date}>
@@ -55,9 +49,9 @@ const ForecastDay = ({ item }: { item: ForecastDayData }) => {
             });
           }}
         >
-          <ForecastHour dataHour={item.data[indexToExtract[0]]} />
-          <ForecastHour dataHour={item.data[indexToExtract[1]]} />
-          <ForecastHour dataHour={item.data[indexToExtract[2]]} />
+          {itemsToPrint.map((dataHour) => (
+            <ForecastHour dataHour={dataHour} key={dataHour.id} />
+          ))}
         </Pressable>
       </View>
     </View>
@@ -75,7 +69,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     padding: 2,
-    backgroundColor: Colors.grey,
+    backgroundColor: Colors.backgroundDark,
     alignItems: "center",
   },
   day: {

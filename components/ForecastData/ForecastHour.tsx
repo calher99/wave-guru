@@ -3,6 +3,7 @@ import React from "react";
 import { ForecastHourData } from "../../types/forecast";
 import { FontAwesome } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
+import { Colors } from "../../constants/styles";
 
 const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
   // Subtracting 133 degrees from dataHour.SWDIR1 value
@@ -89,11 +90,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.backgroundDark,
   },
   hourContainer: {
     padding: 1,
     alignItems: "center",
     justifyContent: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.backgroundDark,
   },
   hour: {
     fontSize: 11,
@@ -113,6 +118,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.backgroundDark,
   },
   swellIconContainer: {
     alignItems: "center",

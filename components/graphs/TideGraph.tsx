@@ -42,8 +42,8 @@ const TideGraph = ({ tideData }: { tideData: TidePoint[] }) => {
     dataPoint.tideDate.split("T")[1].substring(0, 5)
   );
 
-  console.log(dataPoints);
-  console.log(hours);
+  // console.log(dataPoints);
+  // console.log(hours);
   return (
     <LineChart
       data={{

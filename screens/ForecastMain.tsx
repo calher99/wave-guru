@@ -5,7 +5,6 @@ import ForecastDay from "../components/ForecastData/ForecastDay";
 
 const ForecastMain: React.FunctionComponent = () => {
   const { data, error } = useForecastData();
-  console.log("DATA IN THE MAIN", data);
   return (
     <View style={styles.rootContainer}>
       <FlatList
