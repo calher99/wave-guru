@@ -158,23 +158,20 @@ export interface ForecastHourData {
   SWELLPER: number;
   WINDDIR: number;
   WINDSPD: number;
+  WATEMP: number;
+  EXTTEMP: number;
 }
-export interface TideDetails {
-  tide1Date: string;
-  height1: number;
-  tide2Date: string;
-  height2: number;
-  tide3Date: string;
-  height3: number;
-  tide4Date: string;
-  height4: number;
+
+export interface TidePoint {
+  height: number;
+  tideDate: string;
 }
 
 export interface ForecastDayData {
   date: string;
   id: string;
   data: ForecastHourData[];
-  tides?: TideDetails;
+  tides?: TidePoint[];
 }
 
 export interface TideAPIData {

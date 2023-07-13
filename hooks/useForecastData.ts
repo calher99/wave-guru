@@ -6,6 +6,7 @@ import {
   ForecastDayData,
   TideAPIData,
   TideDetails,
+  TidePoint,
 } from "../types/forecast";
 import uuid from "react-native-uuid";
 
@@ -83,11 +84,11 @@ export const useForecastData = () => {
         {
           params: {
             q: "forecast",
-            id_model: "3",
-            rundef: "2023071200x0x240x0x240-2023071200x243x384x243x384",
-            initstr: "2023071200",
-            id_spot: "38441",
-            WGCACHEABLE: "21600",
+            id_model: 3,
+            rundef: "2023071300x0x240x0x240-2023071300x243x384x243x384",
+            initstr: "2023071300",
+            id_spot: 38441,
+            WGCACHEABLE: 21600,
             cachefix: "38.93x-9.42x38",
           },
         }
@@ -135,6 +136,8 @@ export const useForecastData = () => {
           WINDDIR: responseWind.data.fcst.WINDDIR[i],
           WINDSPD: responseWind.data.fcst.WINDSPD[i],
           GUST: responseWind.data.fcst.GUST[i],
+          WATEMP: responseWind.data.fcst.TMP[i],
+          EXTTEMP: responseWind.data.fcst_land.TMP[i],
         });
       }
 
@@ -143,17 +146,17 @@ export const useForecastData = () => {
         {
           params: {
             q: "forecast",
-            id_model: "84",
-            rundef: "2023071200x0x240x0x240-2023071200x243x384x243x384",
-            initstr: "2023071200",
-            id_spot: "38441",
-            WGCACHEABLE: "21600",
+            id_model: 84,
+            rundef: "2023071300x0x240x0x240-2023071300x243x384x243x384",
+            initstr: "2023071300",
+            id_spot: 38441,
+            WGCACHEABLE: 21600,
             cachefix: "38.93x-9.42x38",
           },
         }
       );
 
-      // console.log(responseWaves);
+      // console.log("WAVES", responseWaves);
       // Iterate over the hours array for responseWaves
       for (let i = 0; i < responseWaves.data.fcst.hours.length; i++) {
         // Calculate the date for the current timestamp
@@ -219,40 +222,21 @@ export const useForecastData = () => {
     tideData: TideAPIData
   ): { [key: string]: TideDetails } => {
     // Process the tideData and map it into an object where the keys are the date strings and the values are the tide details
-    let processedData: { [key: string]: TideDetails } = {};
+    let processedData: { [key: string]: TidePoint[] } = {};
 
     tideData.data.forEach((tideEvent) => {
       const date = tideEvent.time.split("T")[0];
 
       // Create a new entry for this date if it doesn't exist yet
+
       if (!processedData[date]) {
-        processedData[date] = {
-          tide1Date: "",
-          height1: 0,
-          tide2Date: "",
-          height2: 0,
-          tide3Date: "",
-          height3: 0,
-          tide4Date: "",
-          height4: 0,
-        };
+        processedData[date] = [];
       }
 
-      // Check the type of event and set the appropriate tide height
-
-      if (processedData[date].height1 === 0) {
-        processedData[date].height1 = parseFloat(tideEvent.height);
-        processedData[date].tide1Date = tideEvent.time;
-      } else if (processedData[date].height2 === 0) {
-        processedData[date].height2 = parseFloat(tideEvent.height);
-        processedData[date].tide2Date = tideEvent.time;
-      } else if (processedData[date].height3 === 0) {
-        processedData[date].height3 = parseFloat(tideEvent.height);
-        processedData[date].tide3Date = tideEvent.time;
-      } else {
-        processedData[date].height4 = parseFloat(tideEvent.height);
-        processedData[date].tide4Date = tideEvent.time;
-      }
+      processedData[date].push({
+        height: parseFloat(tideEvent.height),
+        tideDate: tideEvent.time,
+      });
     });
     console.log("porcessed Tide Data:", processedData);
     return processedData;

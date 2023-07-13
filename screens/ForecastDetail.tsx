@@ -5,6 +5,7 @@ import { ForecastDayData } from "../types/forecast";
 import { Colors } from "../constants/styles";
 
 import ForecastHour from "../components/ForecastData/ForecastHour";
+import TideGraph from "../components/graphs/TideGraph";
 
 type ForecastRouteProp = RouteProp<
   { params: { forecastData: ForecastDayData; day: string; dayDate: string } },
@@ -26,61 +27,36 @@ const ForecastDetail = ({ route }: { route: ForecastRouteProp }) => {
         keyExtractor={(item) => item.id}
       />
       <View style={styles.info}>
-        <View style={styles.tideGraphContainer}></View>
+        <View style={styles.tideGraphContainer}>
+          <TideGraph tideData={forecastData.tides} />
+        </View>
         <View style={styles.infoTable}>
-          {forecastData.tides && (
-            <View style={styles.tideInfo}>
-              <View style={styles.tidePoint}>
-                {forecastData.tides?.height1 > 0 ? (
-                  <Text>High</Text>
-                ) : (
-                  <Text>Low</Text>
-                )}
-                <Text>
-                  {forecastData.tides?.tide1Date.split("T")[1].substring(0, 5)}
+          <View style={styles.tideInfo}>
+            {forecastData.tides?.map((tidePoint) => (
+              <View style={styles.tidePoint} key={tidePoint.height}>
+                {tidePoint.height > 0 ? <Text>High</Text> : <Text>Low</Text>}
+                <Text style={styles.subText}>
+                  {tidePoint.tideDate.split("T")[1].substring(0, 5)}
                 </Text>
-                <Text>{forecastData.tides?.height1.toFixed(2)}m</Text>
-              </View>
-              <View style={styles.tidePoint}>
-                {forecastData.tides?.height2 > 0 ? (
-                  <Text>High</Text>
-                ) : (
-                  <Text>Low</Text>
-                )}
-                <Text>
-                  {forecastData.tides?.tide2Date.split("T")[1].substring(0, 5)}
+                <Text style={styles.subText}>
+                  {tidePoint.height.toFixed(2)}m
                 </Text>
-                <Text>{forecastData.tides?.height2.toFixed(2)}m</Text>
               </View>
-              <View style={styles.tidePoint}>
-                {forecastData.tides?.height3 > 0 ? (
-                  <Text>High</Text>
-                ) : (
-                  <Text>Low</Text>
-                )}
-                <Text>
-                  {forecastData.tides?.tide3Date.split("T")[1].substring(0, 5)}
-                </Text>
-                <Text>{forecastData.tides?.height3.toFixed(2)}m</Text>
-              </View>
-              <View style={styles.tidePoint}>
-                {forecastData.tides?.height4 > 0 ? (
-                  <Text>High</Text>
-                ) : (
-                  <Text>Low</Text>
-                )}
-                <Text>
-                  {forecastData.tides?.tide4Date.split("T")[1].substring(0, 5)}
-                </Text>
-                <Text>{forecastData.tides?.height4.toFixed(2)}m</Text>
-              </View>
-            </View>
-          )}
+            ))}
+          </View>
           <View>
-            <Text>Sunrise</Text>
-            <Text>Sunset</Text>
-            <Text>Water Temp</Text>
-            <Text>Exterior Temp</Text>
+            <View style={styles.tidePoint}>
+              <Text>Sunrise</Text>
+              <Text style={styles.subText}>6</Text>
+            </View>
+            <View style={styles.tidePoint}>
+              <Text>Sunset</Text>
+              <Text style={styles.subText}>22</Text>
+            </View>
+            <View style={styles.tidePoint}>
+              <Text>Water Temp</Text>
+              <Text style={styles.subText}>{forecastData.data[3].WATEMP}</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -111,7 +87,7 @@ const styles = StyleSheet.create({
   },
   info: {},
   tideGraphContainer: {
-    height: 100,
+    height: 130,
     backgroundColor: "black",
   },
   infoTable: {
@@ -122,5 +98,8 @@ const styles = StyleSheet.create({
   tidePoint: {
     flexDirection: "row",
     gap: 13,
+  },
+  subText: {
+    color: "grey",
   },
 });
