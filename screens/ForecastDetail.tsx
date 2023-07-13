@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import React from "react";
 import { RouteProp } from "@react-navigation/native";
-import { ForecastDayData } from "../types/forecast";
+import { ForecastDayData, TidePoint } from "../types/forecast";
 import { Colors } from "../constants/styles";
 
 import ForecastHour from "../components/ForecastData/ForecastHour";
@@ -28,7 +28,7 @@ const ForecastDetail = ({ route }: { route: ForecastRouteProp }) => {
       />
       <View style={styles.info}>
         <View style={styles.tideGraphContainer}>
-          <TideGraph tideData={forecastData.tides} />
+          <TideGraph tideData={forecastData.tides as TidePoint[]} />
         </View>
         <View style={styles.infoTable}>
           <View style={styles.tideInfo}>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   date: {
     flexDirection: "row",
     padding: 2,
-    backgroundColor: Colors.grey,
+    backgroundColor: Colors.backgroundLight,
     alignItems: "center",
   },
   day: {
