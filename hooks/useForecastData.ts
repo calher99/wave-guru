@@ -5,7 +5,6 @@ import {
   Forecast84data,
   ForecastDayData,
   TideAPIData,
-  TideDetails,
   TidePoint,
 } from "../types/forecast";
 import uuid from "react-native-uuid";
@@ -21,7 +20,7 @@ export const useForecastData = () => {
     date: string;
     id: any;
     data: any[];
-    tides?: TideDetails;
+    tides?: TidePoint;
   }> = [];
 
   const fetchTideData = async () => {
@@ -218,9 +217,7 @@ export const useForecastData = () => {
       return [];
     }
   };
-  const processTideData = (
-    tideData: TideAPIData
-  ): { [key: string]: TideDetails } => {
+  const processTideData = (tideData: TideAPIData): { [key: string]: any } => {
     // Process the tideData and map it into an object where the keys are the date strings and the values are the tide details
     let processedData: { [key: string]: TidePoint[] } = {};
 
@@ -256,7 +253,7 @@ export const useForecastData = () => {
         });
 
         // Update state
-        setData(forecastData);
+        setData(forecastData as ForecastDayData[]);
       });
     });
   }, []);
