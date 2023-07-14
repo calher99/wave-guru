@@ -1,5 +1,3 @@
-import { TAutocompleteDropdownItem } from "react-native-autocomplete-dropdown";
-
 export interface BaseSuggestion {
   value: string;
   data: number;

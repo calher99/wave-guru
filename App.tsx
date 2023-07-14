@@ -21,6 +21,7 @@ import MapScreen from "./screens/MapScreen";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import { Image } from "react-native";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -96,12 +97,23 @@ function FavouritesStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: "white",
+        headerStyle: { backgroundColor: Colors.primary100 },
+        headerTintColor: "black",
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
-      <Stack.Screen name="Favourites" component={FavouritesScreen} />
+      <Stack.Screen
+        name="Favourites"
+        component={FavouritesScreen}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
       <Stack.Screen
         name="ForecastMain"
         component={ForecastMain}
@@ -114,9 +126,26 @@ function FavouritesStack() {
               onPress={onLogout}
             />
           ),
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
         }}
       />
-      <Stack.Screen name="ForecastDetail" component={ForecastDetail} />
+      <Stack.Screen
+        name="ForecastDetail"
+        component={ForecastDetail}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -125,12 +154,23 @@ function SearchStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: "white",
+        headerStyle: { backgroundColor: Colors.primary100 },
+        headerTintColor: "black",
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
-      <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
       <Stack.Screen
         name="ForecastMain"
         component={ForecastMain}
@@ -145,7 +185,24 @@ function SearchStack() {
           ),
         }}
       />
-      <Stack.Screen name="ForecastDetail" component={ForecastDetail} />
+      <Stack.Screen
+        name="ForecastDetail"
+        component={ForecastDetail}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -154,12 +211,23 @@ function MapStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: "white",
+        headerStyle: { backgroundColor: Colors.primary100 },
+        headerTintColor: "black",
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
-      <Stack.Screen name="Map" component={MapScreen} />
+      <Stack.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
       <Stack.Screen
         name="ForecastMain"
         component={ForecastMain}
@@ -172,9 +240,26 @@ function MapStack() {
               onPress={onLogout}
             />
           ),
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
         }}
       />
-      <Stack.Screen name="ForecastDetail" component={ForecastDetail} />
+      <Stack.Screen
+        name="ForecastDetail"
+        component={ForecastDetail}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -183,8 +268,9 @@ function Navigation() {
   const { authState } = useAuth();
   return (
     <NavigationContainer>
-      {!authState.authenticated && <AuthStack />}
-      {authState.authenticated && <AuthenticatedTabs />}
+      {/* {!authState.authenticated && <AuthStack />}
+      {authState.authenticated && <AuthenticatedTabs />} */}
+      <AuthenticatedTabs />
     </NavigationContainer>
   );
 }
@@ -202,7 +288,7 @@ function Root() {
 export default function App() {
   return (
     <>
-      <StatusBar style="light" hidden={false} />
+      <StatusBar style="dark" hidden={false} />
       <AuthProvider>
         <Root />
       </AuthProvider>
