@@ -13,6 +13,34 @@ const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
   const windSpdKmh = Math.round(dataHour.WINDSPD * 1.852);
   const gustKmh = Math.round(dataHour.GUST * 1.852);
 
+  const getWindSpeedColor = (windSpeed: number) => {
+    if (windSpeed <= 10) {
+      return Colors.strength0;
+    } else if (windSpeed <= 15) {
+      return Colors.strength10;
+    } else if (windSpeed <= 20) {
+      return Colors.strength15;
+    } else if (windSpeed <= 25) {
+      return Colors.strength20;
+    } else if (windSpeed <= 30) {
+      return Colors.strength25;
+    } else if (windSpeed <= 35) {
+      return Colors.strength30;
+    } else if (windSpeed <= 40) {
+      return Colors.strength35;
+    } else if (windSpeed <= 45) {
+      return Colors.strength40;
+    } else if (windSpeed <= 50) {
+      return Colors.strength45;
+    } else if (windSpeed <= 55) {
+      return Colors.strength50;
+    } else if (windSpeed <= 60) {
+      return Colors.strength55;
+    } else {
+      return Colors.strength60;
+    }
+  };
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.hourContainer}>
@@ -56,11 +84,16 @@ const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
           </View>
         </View>
       </View>
-      <View style={styles.windDirectionContainer}>
+      <View
+        style={[
+          styles.windDirectionContainer,
+          { backgroundColor: getWindSpeedColor(windSpdKmh) },
+        ]}
+      >
         <Foundation
           name="arrow-down"
           size={24}
-          color="white"
+          color="black"
           style={{
             padding: 4,
             transform: [{ rotate: `${dataHour.WINDDIR}deg` }],
@@ -154,10 +187,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "#3F9B0B",
+    // backgroundColor: "#3F9B0B",
   },
   windDirText: {
     fontSize: 12,
-    color: "white",
+    color: "black",
   },
 });

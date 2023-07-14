@@ -1,4 +1,6 @@
-interface BaseSuggestion {
+import { TAutocompleteDropdownItem } from "react-native-autocomplete-dropdown";
+
+export interface BaseSuggestion {
   value: string;
   data: number;
   g: string;
@@ -7,11 +9,7 @@ interface BaseSuggestion {
   lon: number;
   type: string;
 }
-interface Place {
-  id: number;
-  lat: number;
-  lon: number;
-  name: string;
-  country: string;
-  countryCode: string;
+
+export interface Place extends BaseSuggestion {
+  countryCode?: string;
 }

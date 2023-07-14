@@ -3,23 +3,28 @@ import { View, Text, FlatList, Pressable, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CountryFlag from "react-native-country-flag";
 import ListSpot from "../components/ui/ListSpot";
+import { BaseSuggestion, Place } from "../types/place";
 
 const FAVOURITES: Place[] = [
   {
-    id: 207059,
+    data: 207059,
     lat: 43.391,
     lon: -4.372,
-    name: "Spain - San Vicente de la Barquera",
-    country: "ESP",
+    g: "ho",
+    id_user: 12,
+    type: "ho",
+    value: "Spain - San Vicente de la Barquera",
     countryCode: "ES",
   },
   {
-    id: 38441,
+    data: 38441,
     lat: 38.93,
     lon: -9.42,
-    name: "Portugal - Ribeira d' ilhas",
-    country: "Portugal",
+    value: "Portugal - Ribeira d' ilhas",
     countryCode: "PT",
+    g: "ho",
+    id_user: 12,
+    type: "ho",
   },
 ];
 
@@ -29,7 +34,7 @@ const FavouritesScreen = () => {
       <FlatList
         data={FAVOURITES}
         renderItem={({ item }) => <ListSpot place={item} />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.data.toString()}
       />
     </View>
   );

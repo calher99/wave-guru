@@ -3,9 +3,11 @@ import React from "react";
 import CountryFlag from "react-native-country-flag";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../constants/styles";
+import { Place } from "../../types/place";
 
 const ListSpot = ({ place }: { place: Place }) => {
   const navigation = useNavigation();
+  console.log(place.value);
   return (
     <Pressable
       android_ripple={{ color: "#ccc" }}
@@ -23,8 +25,10 @@ const ListSpot = ({ place }: { place: Place }) => {
       }}
     >
       <View style={styles.container}>
-        <CountryFlag isoCode={place.countryCode} size={15}></CountryFlag>
-        <Text style={styles.spotName}>{place.name}</Text>
+        {place.countryCode && (
+          <CountryFlag isoCode={place.countryCode} size={15}></CountryFlag>
+        )}
+        <Text style={styles.spotName}>{place.value}</Text>
       </View>
     </Pressable>
   );
