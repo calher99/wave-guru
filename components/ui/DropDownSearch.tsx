@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { memo, useCallback, useState, useMemo } from "react";
 
-import { SPOT_DATA } from "../../assets/searchData";
-
 import { FlatList, View, StyleSheet, Text } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import ListSpot from "./ListSpot";
+import { SPOT_DATA } from "../../assets/data/spotData";
 
 export const DropDownSearch = memo(() => {
   const [search, setSearch] = useState("");
