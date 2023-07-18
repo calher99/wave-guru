@@ -18,6 +18,7 @@ import {
 } from "expo-location";
 import { SPOT_DATA } from "../assets/data/spotData";
 import { BaseSuggestion } from "../types/place";
+import { useNavigation } from "@react-navigation/native";
 
 interface MapRegion {
   latitude: number;
@@ -27,6 +28,7 @@ interface MapRegion {
 }
 
 const MapScreen: React.FC = () => {
+  const navigation = useNavigation();
   const [mapRegion, setMapRegion] = useState<MapRegion>({
     latitude: 38.9665,
     longitude: -9.4176,
@@ -136,7 +138,7 @@ const MapScreen: React.FC = () => {
             </View>
             <Callout
               onPress={() => {
-                console.log("navigate somewhere");
+                navigation.navigate("ForecastMain");
               }}
             >
               <Text style={styles.calloutText}>{spot.value}</Text>
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: "absolute", //use absolute position to show button on top of the map
-    bottom: "8%", //for center align
+    bottom: "8%",
     left: "85%",
   },
   containerIcon: {

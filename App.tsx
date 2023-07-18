@@ -79,9 +79,15 @@ function AuthenticatedTabs() {
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="SettingsStack"
+        component={SettingsStack}
         options={{
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
           tabBarLabel: "",
           tabBarIcon: ({ color, size }) => (
             <Feather name="settings" size={size} color={color} />
@@ -244,6 +250,32 @@ function MapStack() {
       <Stack.Screen
         name="ForecastDetail"
         component={ForecastDetail}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function SettingsStack() {
+  const { onLogout } = useAuth();
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primary100 },
+        headerTintColor: "black",
+        contentStyle: { backgroundColor: Colors.primary100 },
+      }}
+    >
+      <Stack.Screen
+        name="Search"
+        component={SettingsScreen}
         options={{
           headerTitle: () => (
             <Image
