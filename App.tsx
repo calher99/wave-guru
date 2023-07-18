@@ -219,14 +219,7 @@ function MapStack() {
       <Stack.Screen
         name="Map"
         component={MapScreen}
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require("./assets/images/windguru-icon-192x192.png")}
-              style={{ width: 40, height: 40 }}
-            />
-          ),
-        }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="ForecastMain"

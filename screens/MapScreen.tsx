@@ -18,7 +18,6 @@ import {
 } from "expo-location";
 import { SPOT_DATA } from "../assets/data/spotData";
 import { BaseSuggestion } from "../types/place";
-import { FontAwesome } from "@expo/vector-icons";
 
 interface MapRegion {
   latitude: number;
@@ -176,7 +175,7 @@ const styles = StyleSheet.create({
   },
   image: { width: 30, height: 30 },
   calloutText: {
-    width: 150, // adjust this value as per your requirements
+    width: 150,
     flexWrap: "wrap",
     textAlign: "center",
   },
