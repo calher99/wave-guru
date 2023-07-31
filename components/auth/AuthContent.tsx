@@ -12,7 +12,10 @@ interface AuthContentProps {
 }
 
 function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
+  const { onGoogle, isLoading, error } = useAuth();
+
   const navigation = useNavigation();
+
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     password: false,
@@ -109,6 +112,11 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
           {isLogin ? "Create a new user" : "Log in instead"}
         </FlatButton>
       </View>
+
+      <Image
+        style={styles.imageWaves}
+        source={require("../../assets/images/wave.png")}
+      />
     </View>
   );
 }
@@ -167,5 +175,9 @@ const styles = StyleSheet.create({
     // color: "#FFFFFF",
     fontSize: 16,
     // fontFamily: 'Roboto', // use 'Roboto' if it's available, or another sans-serif font
+  },
+  imageWaves: {
+    width: 120,
+    height: 60,
   },
 });

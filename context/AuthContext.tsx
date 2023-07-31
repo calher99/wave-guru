@@ -23,6 +23,7 @@ interface AuthContextInterface {
   isLoading: boolean;
   error: string | null;
   onLoad: () => Promise<void>;
+  onGoogle: (code: string) => Promise<UserData | void>;
   onRegister: (email: string, password: string) => Promise<UserData | void>;
   onLogin: (email: string, password: string) => Promise<UserData | void>;
   onLogout: () => Promise<void>;
@@ -35,6 +36,7 @@ const AuthContext = createContext<AuthContextInterface>({
   authState: { token: null, authenticated: null },
   isLoading: false,
   error: null,
+  onGoogle: async () => {},
   onLoad: async () => {},
   onRegister: async () => {},
   onLogin: async () => {},
@@ -149,7 +151,40 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     }
   };
 
+  const enterGoogle = async (code: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const responseData = await axios.post(`${API_URL}/users/signup/Google`, {
+        code: code,
+      });
+      console.log(responseData);
+      // setAuthState({
+      //   token: responseData.data.token,
+      //   authenticated: true,
+      // });
+
+      // axios.defaults.headers.common[
+      //   "Authorization"
+      // ] = `Bearer ${responseData.data.token}`;
+
+      // await SecureStore.setItemAsync(TOKEN_KEY, responseData.data.token);
+
+      return responseData.data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        setError(error.response.data.message);
+        // return { errorMessage: error.response.data.message };
+      } else {
+        setError("An error occurred during registration");
+        // return { errorMessage: "An error ocurred" };
+      }
+    }
+    setIsLoading(false);
+  };
+
   const value = {
+    onGoogle: enterGoogle,
     onRegister: register,
     onLogin: login,
     onLogout: logout,
