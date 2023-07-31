@@ -48,9 +48,10 @@ export default Input;
 const styles = StyleSheet.create({
   inputContainer: {
     marginVertical: 8,
+    // flex: 1,
   },
   label: {
-    color: "white",
+    color: "black",
     marginBottom: 4,
   },
   labelInvalid: {
@@ -59,8 +60,8 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 8,
     paddingHorizontal: 6,
-    backgroundColor: Colors.primary100,
-    borderRadius: 4,
+    backgroundColor: Colors.backgroundDark,
+    borderRadius: 8,
     fontSize: 16,
   },
   inputInvalid: {

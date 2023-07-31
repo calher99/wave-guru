@@ -2,8 +2,10 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { Colors } from "../constants/styles";
 import SettingType from "../components/ui/SettingType";
+import { useAuth } from "../context/AuthContext";
 
 const SettingsScreen = () => {
+  const { onLogout } = useAuth();
   return (
     <View style={styles.rootContainer}>
       <View style={styles.settingsBlock}>
@@ -13,7 +15,7 @@ const SettingsScreen = () => {
         <SettingType
           text="Sign Out"
           onHandlePress={() => {
-            console.log("sign Out");
+            onLogout();
           }}
         />
         <SettingType

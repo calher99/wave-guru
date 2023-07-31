@@ -21,7 +21,7 @@ import MapScreen from "./screens/MapScreen";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,6 +33,7 @@ function AuthStack() {
         headerStyle: { backgroundColor: Colors.primary500 },
         headerTintColor: "white",
         contentStyle: { backgroundColor: Colors.primary100 },
+        headerShown: false,
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />
@@ -112,6 +113,7 @@ function FavouritesStack() {
         name="Favourites"
         component={FavouritesScreen}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => (
             <Image
               source={require("./assets/images/windguru-icon-192x192.png")}
@@ -124,14 +126,7 @@ function FavouritesStack() {
         name="ForecastMain"
         component={ForecastMain}
         options={{
-          headerRight: ({ tintColor }) => (
-            <IconButton
-              icon="exit"
-              color={tintColor as string}
-              size={24}
-              onPress={onLogout}
-            />
-          ),
+          headerTitleAlign: "center",
           headerTitle: () => (
             <Image
               source={require("./assets/images/windguru-icon-192x192.png")}
@@ -144,6 +139,7 @@ function FavouritesStack() {
         name="ForecastDetail"
         component={ForecastDetail}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => (
             <Image
               source={require("./assets/images/windguru-icon-192x192.png")}
@@ -169,6 +165,7 @@ function SearchStack() {
         name="Search"
         component={SearchScreen}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => (
             <Image
               source={require("./assets/images/windguru-icon-192x192.png")}
@@ -181,12 +178,11 @@ function SearchStack() {
         name="ForecastMain"
         component={ForecastMain}
         options={{
-          headerRight: ({ tintColor }) => (
-            <IconButton
-              icon="exit"
-              color={tintColor as string}
-              size={24}
-              onPress={onLogout}
+          headerTitleAlign: "center",
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
             />
           ),
         }}
@@ -195,12 +191,7 @@ function SearchStack() {
         name="ForecastDetail"
         component={ForecastDetail}
         options={{
-          headerTitle: () => (
-            <Image
-              source={require("./assets/images/windguru-icon-192x192.png")}
-              style={{ width: 40, height: 40 }}
-            />
-          ),
+          headerTitleAlign: "center",
           headerTitle: () => (
             <Image
               source={require("./assets/images/windguru-icon-192x192.png")}
@@ -231,14 +222,8 @@ function MapStack() {
         name="ForecastMain"
         component={ForecastMain}
         options={{
-          headerRight: ({ tintColor }) => (
-            <IconButton
-              icon="exit"
-              color={tintColor as string}
-              size={24}
-              onPress={onLogout}
-            />
-          ),
+          headerTitleAlign: "center",
+
           headerTitle: () => (
             <Image
               source={require("./assets/images/windguru-icon-192x192.png")}
@@ -251,6 +236,7 @@ function MapStack() {
         name="ForecastDetail"
         component={ForecastDetail}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => (
             <Image
               source={require("./assets/images/windguru-icon-192x192.png")}
@@ -264,7 +250,6 @@ function MapStack() {
 }
 
 function SettingsStack() {
-  const { onLogout } = useAuth();
   return (
     <Stack.Navigator
       screenOptions={{
@@ -277,6 +262,7 @@ function SettingsStack() {
         name="Search"
         component={SettingsScreen}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => (
             <Image
               source={require("./assets/images/windguru-icon-192x192.png")}
@@ -293,9 +279,9 @@ function Navigation() {
   const { authState } = useAuth();
   return (
     <NavigationContainer>
-      {/* {!authState.authenticated && <AuthStack />}
-      {authState.authenticated && <AuthenticatedTabs />} */}
-      <AuthenticatedTabs />
+      {!authState.authenticated && <AuthStack />}
+      {authState.authenticated && <AuthenticatedTabs />}
+      {/* <AuthenticatedTabs /> */}
     </NavigationContainer>
   );
 }

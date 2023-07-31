@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import FlatButton from "../ui/FlatButton";
 import AuthForm from "./AuthForm";
@@ -63,11 +63,47 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
 
   return (
     <View style={styles.authContent}>
+      <Image
+        style={styles.logo}
+        source={require("../../assets/images/windguru-icon-192x192.png")}
+      />
       <AuthForm
         isLogin={isLogin}
         onSubmit={submitHandler}
         credentialsInvalid={credentialsInvalid}
       />
+      <View style={styles.oAuth}>
+        <Pressable
+          android_ripple={{ color: "#ccc" }}
+          style={({ pressed }) => [
+            pressed ? styles.buttonPressed : styles.button, //Style is only applied when pressed
+          ]}
+          onPress={() => console.log("Google")}
+        >
+          <View style={styles.container}>
+            <Image
+              style={styles.image}
+              source={require("../../assets/images/GOOG.png")}
+            />
+            <Text style={styles.text}>Google</Text>
+          </View>
+        </Pressable>
+        <Pressable
+          android_ripple={{ color: "#ccc" }}
+          style={({ pressed }) => [
+            pressed ? styles.buttonPressed : styles.button, //Style is only applied when pressed
+          ]}
+          onPress={() => console.log("Facebook")}
+        >
+          <View style={styles.container}>
+            <Image
+              style={styles.image}
+              source={require("../../assets/images/fb.png")}
+            />
+            <Text style={styles.text}>Facebook</Text>
+          </View>
+        </Pressable>
+      </View>
       <View style={styles.buttons}>
         <FlatButton onPress={switchAuthModeHandler}>
           {isLogin ? "Create a new user" : "Log in instead"}
@@ -81,18 +117,55 @@ export default AuthContent;
 
 const styles = StyleSheet.create({
   authContent: {
-    marginTop: 64,
-    marginHorizontal: 32,
-    padding: 16,
-    borderRadius: 8,
-    backgroundColor: Colors.primary800,
-    elevation: 2,
-    shadowColor: "black",
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.35,
-    shadowRadius: 4,
+    flex: 1,
+    alignItems: "center",
+    marginTop: 50,
   },
   buttons: {
     marginTop: 8,
+  },
+  logo: {
+    width: 40,
+    height: 40,
+  },
+  oAuth: {
+    marginTop: 8,
+    flexDirection: "row",
+    gap: 8,
+  },
+  button: {
+    width: 150,
+    height: 40,
+    borderRadius: 8,
+    borderColor: Colors.backgroundDark,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonPressed: {
+    width: 150,
+    height: 40,
+    borderRadius: 8,
+    borderColor: Colors.backgroundDark,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0.5,
+  },
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 9,
+  },
+  image: {
+    width: 20,
+    height: 20,
+    marginRight: 24,
+  },
+  text: {
+    // color: "#FFFFFF",
+    fontSize: 16,
+    // fontFamily: 'Roboto', // use 'Roboto' if it's available, or another sans-serif font
   },
 });

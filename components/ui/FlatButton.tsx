@@ -32,6 +32,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    color: Colors.primary100,
+    color: Colors.logo,
   },
 });
