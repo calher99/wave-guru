@@ -5,6 +5,7 @@ import FlatButton from "../ui/FlatButton";
 import AuthForm from "./AuthForm";
 import { Colors } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../context/AuthContext";
 
 interface AuthContentProps {
   isLogin?: boolean;
@@ -113,10 +114,10 @@ function AuthContent({ isLogin, onAuthenticate }: AuthContentProps) {
         </FlatButton>
       </View>
 
-      <Image
+      {/* <Image
         style={styles.imageWaves}
         source={require("../../assets/images/wave.png")}
-      />
+      /> */}
     </View>
   );
 }
