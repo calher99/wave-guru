@@ -2,16 +2,22 @@ import { ReactNode, createContext, useContext, useState } from "react";
 
 interface UserContextInterface {
   height: string;
+  setHeight: React.Dispatch<React.SetStateAction<string>>;
   speed: string;
+  setSpeed: React.Dispatch<React.SetStateAction<string>>;
   temperature: string;
+  setTemperature: React.Dispatch<React.SetStateAction<string>>;
   isLoading: boolean;
   error: string | null;
 }
 
 const UserContext = createContext<UserContextInterface>({
   height: "m",
+  setHeight: () => {},
   speed: "kmph",
+  setSpeed: () => {},
   temperature: "celsius",
+  setTemperature: () => {},
   isLoading: false,
   error: null,
 });
@@ -34,8 +40,11 @@ export const AuthProvider = ({ children }: UserProviderProps): JSX.Element => {
 
   const value = {
     height,
+    setHeight,
     speed,
+    setSpeed,
     temperature,
+    setTemperature,
     isLoading,
     error,
   };
