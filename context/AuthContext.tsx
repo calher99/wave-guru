@@ -9,6 +9,8 @@ import axios, { AxiosError } from "axios";
 import { Alert } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
+import Constants from "expo-constants";
+
 interface UserData {
   token: string;
 }
@@ -29,8 +31,7 @@ interface AuthContextInterface {
   onLogout: () => Promise<void>;
 }
 
-const TOKEN_KEY = "surfForecastUser";
-export const API_URL = "http://localhost:4090/api";
+const { backendUrl, tokenSecureStore } = Constants.manifest?.extra || {};
 
 const AuthContext = createContext<AuthContextInterface>({
   authState: { token: null, authenticated: null },
@@ -63,7 +64,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     setIsLoading(true);
     setError(null);
     try {
-      const responseData = await axios.post(`${API_URL}/users/signup`, {
+      const responseData = await axios.post(`${backendUrl}/users/signup`, {
         email: email,
         password: password,
       });
@@ -76,7 +77,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         "Authorization"
       ] = `Bearer ${responseData.data.token}`;
 
-      await SecureStore.setItemAsync(TOKEN_KEY, responseData.data.token);
+      await SecureStore.setItemAsync(tokenSecureStore, responseData.data.token);
 
       return responseData.data;
     } catch (error) {
@@ -95,7 +96,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     setIsLoading(true);
     setError(null);
     try {
-      const responseData = await axios.post(`${API_URL}/users/signin`, {
+      const responseData = await axios.post(`${backendUrl}/users/signin`, {
         email: email,
         password: password,
       });
@@ -108,7 +109,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         "Authorization"
       ] = `Bearer ${responseData.data.token}`;
 
-      await SecureStore.setItemAsync(TOKEN_KEY, responseData.data.token);
+      await SecureStore.setItemAsync(tokenSecureStore, responseData.data.token);
 
       return responseData.data;
     } catch (error) {
@@ -126,7 +127,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const logout = async () => {
     setIsLoading(false);
 
-    await SecureStore.deleteItemAsync(TOKEN_KEY);
+    await SecureStore.deleteItemAsync(tokenSecureStore);
 
     axios.defaults.headers.common["Authorization"] = "";
 
@@ -139,7 +140,7 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   const loadApp = async () => {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
+    const token = await SecureStore.getItemAsync(tokenSecureStore);
 
     if (token) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -155,22 +156,25 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
     setIsLoading(true);
     setError(null);
     try {
-      const responseData = await axios.post(`${API_URL}/users/signup/Google`, {
-        code: code,
+      const responseData = await axios.post(
+        `${backendUrl}/users/fake/signup/Google`,
+        {
+          code: code,
+        }
+      );
+
+      setAuthState({
+        token: responseData.data.token,
+        authenticated: true,
       });
-      console.log(responseData);
-      // setAuthState({
-      //   token: responseData.data.token,
-      //   authenticated: true,
-      // });
 
-      // axios.defaults.headers.common[
-      //   "Authorization"
-      // ] = `Bearer ${responseData.data.token}`;
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${responseData.data.token}`;
 
-      // await SecureStore.setItemAsync(TOKEN_KEY, responseData.data.token);
+      await SecureStore.setItemAsync(tokenSecureStore, responseData.data.token);
 
-      return responseData.data;
+      // return responseData.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         setError(error.response.data.message);

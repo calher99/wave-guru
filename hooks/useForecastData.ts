@@ -11,9 +11,13 @@ import uuid from "react-native-uuid";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import Constants from "expo-constants";
+
 const TIDE_DATA = "surfForecastTideData";
 
 export const useForecastData = () => {
+  const { tideApiKey, tideApiUrl } = Constants.manifest?.extra || {};
+
   const [data, setData] = useState<ForecastDayData[] | null>(null); // replace any with the correct type if you have one
   const [error, setError] = useState<Error | null>(null);
   let dayArray: Array<{
@@ -48,7 +52,7 @@ export const useForecastData = () => {
 
     try {
       const responseTide: AxiosResponse<TideAPIData> = await axios.get(
-        `https://api.stormglass.io/v2/tide/extremes/point`,
+        tideApiUrl,
         {
           params: {
             lat: lat,
@@ -57,8 +61,7 @@ export const useForecastData = () => {
             end: futureDateString, // updated end date
           },
           headers: {
-            Authorization:
-              "cbb42dee-1ffe-11ee-8d52-0242ac130002-cbb42e5c-1ffe-11ee-8d52-0242ac130002",
+            Authorization: tideApiKey,
           },
         }
       );

@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 3.17.1"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_ANDROID_CLIENT_ID": "606959525777-9rs77bb7dgfebd1hhe0r0v98ekqirs7t.apps.googleusercontent.com",
+        "EXPO_PUBLIC_IOS_CLIENT_ID": "606959525777-449sp7f367f0fe316868lcupi29dtn55.apps.googleusercontent.com",
+        "EXPO_PUBLIC_CLIENT_ID": "606959525777-fnognt4ru5idk6du97qu2i9oogvqvtll.apps.googleusercontent.com",
+        "EXPO_PUBLIC_BACKEND_URL": "https://wave-guru-backend.onrender.com/api",
+        "EXPO_PUBLIC_TIDE_API_URL": "https://api.stormglass.io/v2/tide/extremes/point",
+        "EXPO_PUBLIC_TIDE_API_KEY": "cbb42dee-1ffe-11ee-8d52-0242ac130002-cbb42e5c-1ffe-11ee-8d52-0242ac130002",
+        "EXPO_PUBLIC_TOKEN_KEY_SECURE_STORE": "surfForecastUser"
+      }
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
+}

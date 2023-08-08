@@ -22,6 +22,7 @@ import MapScreen from "./screens/MapScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Image, View } from "react-native";
+import SettingSelectScreen from "./screens/SettingSelectScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -259,8 +260,21 @@ function SettingsStack() {
       }}
     >
       <Stack.Screen
-        name="Search"
+        name="Settings"
         component={SettingsScreen}
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: () => (
+            <Image
+              source={require("./assets/images/windguru-icon-192x192.png")}
+              style={{ width: 40, height: 40 }}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="SelectSettings"
+        component={SettingSelectScreen}
         options={{
           headerTitleAlign: "center",
           headerTitle: () => (

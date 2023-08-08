@@ -3,9 +3,11 @@ import React from "react";
 import { Colors } from "../constants/styles";
 import SettingType from "../components/ui/SettingType";
 import { useAuth } from "../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 const SettingsScreen = () => {
   const { onLogout } = useAuth();
+  const navigation = useNavigation();
   return (
     <View style={styles.rootContainer}>
       <View style={styles.settingsBlock}>
@@ -32,19 +34,28 @@ const SettingsScreen = () => {
         <SettingType
           text="Speed"
           onHandlePress={() => {
-            console.log("sign Out");
+            navigation.navigate("SelectSettings", {
+              title: "speed",
+              selected: "kmph",
+            });
           }}
         />
         <SettingType
           text="Height"
           onHandlePress={() => {
-            console.log("sign Out");
+            navigation.navigate("SelectSettings", {
+              title: "height",
+              selected: "m",
+            });
           }}
         />
         <SettingType
           text="Temperature"
           onHandlePress={() => {
-            console.log("sign Out");
+            navigation.navigate("SelectSettings", {
+              title: "temperature",
+              selected: "celsius",
+            });
           }}
         />
       </View>
