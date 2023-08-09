@@ -4,9 +4,11 @@ import { Colors } from "../constants/styles";
 import SettingType from "../components/ui/SettingType";
 import { useAuth } from "../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
+import { useUser } from "../context/UserContext";
 
 const SettingsScreen = () => {
   const { onLogout } = useAuth();
+  const { height, temperature, speed } = useUser();
   const navigation = useNavigation();
   return (
     <View style={styles.rootContainer}>
@@ -36,7 +38,6 @@ const SettingsScreen = () => {
           onHandlePress={() => {
             navigation.navigate("SelectSettings", {
               title: "speed",
-              selected: "kmph",
             });
           }}
         />
@@ -45,7 +46,6 @@ const SettingsScreen = () => {
           onHandlePress={() => {
             navigation.navigate("SelectSettings", {
               title: "height",
-              selected: "m",
             });
           }}
         />
@@ -54,7 +54,6 @@ const SettingsScreen = () => {
           onHandlePress={() => {
             navigation.navigate("SelectSettings", {
               title: "temperature",
-              selected: "celsius",
             });
           }}
         />

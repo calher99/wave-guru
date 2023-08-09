@@ -30,10 +30,10 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider = ({ children }: UserProviderProps): JSX.Element => {
-  const [height, setHeight] = useState<string>("");
-  const [speed, setSpeed] = useState<string>("");
-  const [temperature, setTemperature] = useState<string>("");
+export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
+  const [height, setHeight] = useState<string>("m");
+  const [speed, setSpeed] = useState<string>("kmph");
+  const [temperature, setTemperature] = useState<string>("celsius");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

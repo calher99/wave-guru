@@ -11,7 +11,7 @@ export default {
         backendUrl: process.env.EXPO_PUBLIC_BACKEND_URL,
         tideApiKey: process.env.EXPO_PUBLIC_TIDE_API_KEY,
         tideApiUrl: process.env.EXPO_PUBLIC_TIDE_API_URL,
-        tokenSecureStore: EXPO_PUBLIC_TOKEN_KEY_SECURE_STORE,
+        tokenSecureStore: process.env.EXPO_PUBLIC_TOKEN_KEY_SECURE_STORE,
         eas: {
           projectId: "dcd1320a-3133-4b41-98cc-f4a3b7377095"
       }

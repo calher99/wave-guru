@@ -1,6 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { RouteProp } from "@react-navigation/native";
+import { useUser } from "../context/UserContext";
 
 type SettingsRouteProp = RouteProp<
   { params: { selected: string; title: string } },
@@ -29,15 +30,34 @@ const optionsMap: Record<string, Option[]> = {
 };
 
 const SettingSelectScreen = ({ route }: { route: SettingsRouteProp }) => {
-  const { selected, title } = route.params;
+  const { title } = route.params;
+  const { setHeight, setSpeed, setTemperature, temperature, height, speed } =
+    useUser();
+
   const options = optionsMap[title] || [];
+
+  let setter: React.Dispatch<React.SetStateAction<string>>;
+  let valueSelected: string;
+  if (title === "height") {
+    setter = setHeight;
+    valueSelected = height;
+  } else if (title === "speed") {
+    setter = setSpeed;
+    valueSelected = speed;
+  } else if (title === "temperature") {
+    setter = setTemperature;
+    valueSelected = temperature;
+  }
 
   return (
     <View style={{ padding: 16 }}>
       {options.map((option) => (
         <Pressable
           key={option.value}
-          onPress={() => console.log("Selected:", option.value)}
+          onPress={() => {
+            console.log(option.value);
+            setter && setter(option.value);
+          }}
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -45,7 +65,7 @@ const SettingSelectScreen = ({ route }: { route: SettingsRouteProp }) => {
           }}
         >
           <Text>{option.label}</Text>
-          {selected === option.value && <Text>✓</Text>}
+          {valueSelected === option.value && <Text>✓</Text>}
         </Pressable>
       ))}
     </View>

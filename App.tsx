@@ -23,6 +23,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Image, View } from "react-native";
 import SettingSelectScreen from "./screens/SettingSelectScreen";
+import { UserProvider } from "./context/UserContext";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -315,7 +316,9 @@ export default function App() {
     <>
       <StatusBar style="dark" hidden={false} />
       <AuthProvider>
-        <Root />
+        <UserProvider>
+          <Root />
+        </UserProvider>
       </AuthProvider>
     </>
   );
