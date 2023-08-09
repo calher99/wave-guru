@@ -35,6 +35,7 @@ const SettingsScreen = () => {
         </View>
         <SettingType
           text="Speed"
+          selectedOption={speed}
           onHandlePress={() => {
             navigation.navigate("SelectSettings", {
               title: "speed",
@@ -43,6 +44,7 @@ const SettingsScreen = () => {
         />
         <SettingType
           text="Height"
+          selectedOption={height}
           onHandlePress={() => {
             navigation.navigate("SelectSettings", {
               title: "height",
@@ -51,6 +53,7 @@ const SettingsScreen = () => {
         />
         <SettingType
           text="Temperature"
+          selectedOption={temperature}
           onHandlePress={() => {
             navigation.navigate("SelectSettings", {
               title: "temperature",
@@ -82,6 +85,7 @@ const styles = StyleSheet.create({
   },
   settingsBlock: {},
   settingsBlockText: {
+    paddingLeft: 5,
     height: 30,
     justifyContent: "center",
   },

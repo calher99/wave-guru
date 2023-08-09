@@ -5,10 +5,15 @@ import { Colors } from "../../constants/styles";
 
 interface SettingsProps {
   text: string;
+  selectedOption?: string;
   onHandlePress: () => void;
 }
 
-const SettingType = ({ text, onHandlePress }: SettingsProps) => {
+const SettingType = ({
+  text,
+  onHandlePress,
+  selectedOption,
+}: SettingsProps) => {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -21,6 +26,11 @@ const SettingType = ({ text, onHandlePress }: SettingsProps) => {
       <View style={styles.settingText}>
         <Text>{text}</Text>
       </View>
+      {selectedOption && (
+        <View>
+          <Text style={styles.selectedText}>{selectedOption}</Text>
+        </View>
+      )}
       <Ionicons name="chevron-forward" size={24} color="black" />
     </Pressable>
   );
@@ -37,11 +47,16 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.backgroundLight,
     paddingBottom: 2,
     paddingTop: 2,
+    gap: 2,
+    paddingLeft: 10,
   },
   settingText: {
     flex: 1,
   },
   buttonPressed: {
     opacity: 0.5,
+  },
+  selectedText: {
+    color: Colors.backgroundDarker,
   },
 });

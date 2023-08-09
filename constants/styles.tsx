@@ -4,6 +4,7 @@ export const Colors = {
   primary800: "#4077c6",
   header: "#FFF",
   logo: "#4077c6",
+  backgroundDarker: "#b0b0b0",
   backgroundDark: "#d5d5d5",
   backgroundLight: "#f4f4f4",
   error100: "#FFCCCC",

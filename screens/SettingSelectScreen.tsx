@@ -1,7 +1,9 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { RouteProp } from "@react-navigation/native";
 import { useUser } from "../context/UserContext";
+import { Feather } from "@expo/vector-icons";
+import { Colors } from "../constants/styles";
 
 type SettingsRouteProp = RouteProp<
   { params: { selected: string; title: string } },
@@ -50,22 +52,23 @@ const SettingSelectScreen = ({ route }: { route: SettingsRouteProp }) => {
   }
 
   return (
-    <View style={{ padding: 16 }}>
-      {options.map((option) => (
+    <View style={styles.container}>
+      {options.map((option, index) => (
         <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            pressed ? styles.buttonPressed : null,
+          ]}
+          android_ripple={{ color: "#ccc" }}
           key={option.value}
           onPress={() => {
-            console.log(option.value);
             setter && setter(option.value);
-          }}
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            padding: 8,
           }}
         >
           <Text>{option.label}</Text>
-          {valueSelected === option.value && <Text>✓</Text>}
+          {valueSelected === option.value && (
+            <Feather name="check-circle" size={20} color="green" />
+          )}
         </Pressable>
       ))}
     </View>
@@ -73,3 +76,21 @@ const SettingSelectScreen = ({ route }: { route: SettingsRouteProp }) => {
 };
 
 export default SettingSelectScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+  button: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingBottom: 10,
+    paddingTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.backgroundLight,
+  },
+  buttonPressed: {
+    opacity: 0.5,
+  },
+});

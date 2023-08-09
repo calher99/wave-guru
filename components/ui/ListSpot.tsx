@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     gap: 15,
     paddingBottom: 10,
     paddingTop: 10,
+    paddingLeft: 8,
     borderBottomWidth: 1, // Add this line
     borderBottomColor: Colors.backgroundDark, // And this line
 
