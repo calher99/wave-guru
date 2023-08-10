@@ -12,12 +12,12 @@ import Constants from "expo-constants";
 import { useUser } from "../../context/UserContext";
 
 const ListSpot = ({ place, type }: { place: Place; type: string }) => {
-  const { onAdd } = useUser();
+  const { onAdd, onDelete } = useUser();
   const { backendUrl } = Constants.manifest?.extra || {};
   const navigation = useNavigation();
 
   const deleteFavouritehandler = () => {
-    console.log("delete");
+    onDelete(place.id as string);
   };
 
   const selectFavouritehandler = async () => {

@@ -9,7 +9,6 @@ import {
 import Constants from "expo-constants";
 import { useAuth } from "./AuthContext";
 import { Place } from "../types/place";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 interface UserContextInterface {
   height: string;
@@ -113,20 +112,33 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
     }
   };
 
-  const deletePlace = () => {};
+  const deletePlace = async (id: string) => {
+    try {
+      await axios({
+        url: `${backendUrl}/places/delete/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + authState.token,
+        },
+      });
+      //Update the saved playlists
+      setPlaces((prev: Place[] | []) => {
+        return prev.filter((place) => place.id !== id);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getPlaces = async () => {
     try {
-      const responseData = await axios.get(`${backendUrl}/places//getPlaces`, {
+      const responseData = await axios.get(`${backendUrl}/places/getPlaces`, {
         headers: {
           Authorization: `Bearer ${authState.token}`,
           "Content-Type": "application/json",
         },
       });
-      console.log(
-        ":::::::PLACES RETRIVED:::::::::::",
-        responseData.data.places
-      );
+
       const placeArray = responseData.data.places.map((place: Place) => {
         return {
           value: place.value,
