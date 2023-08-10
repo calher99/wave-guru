@@ -1,8 +1,14 @@
 import { View, Text, StyleSheet, Platform } from "react-native";
 import React from "react";
 import { DropDownSearch } from "../components/ui/DropDownSearch";
+import { useUser } from "../context/UserContext";
+import LoadingOverlay from "../components/ui/LoadingOverlay";
 
 const SearchScreen = () => {
+  const { isLoading } = useUser();
+  if (isLoading) {
+    return <LoadingOverlay message="Adding favourite" />;
+  }
   return (
     <View>
       {/* <Text style={styles.sectionTitle}>Remote list</Text> */}

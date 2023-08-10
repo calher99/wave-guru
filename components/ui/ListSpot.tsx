@@ -5,15 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../constants/styles";
 import { Place } from "../../types/place";
 import { MaterialIcons } from "@expo/vector-icons";
-import axios from "axios";
-
-import Constants from "expo-constants";
 
 import { useUser } from "../../context/UserContext";
 
 const ListSpot = ({ place, type }: { place: Place; type: string }) => {
   const { onAdd, onDelete } = useUser();
-  const { backendUrl } = Constants.manifest?.extra || {};
   const navigation = useNavigation();
 
   const deleteFavouritehandler = () => {
@@ -21,8 +17,7 @@ const ListSpot = ({ place, type }: { place: Place; type: string }) => {
   };
 
   const selectFavouritehandler = async () => {
-    console.log("add");
-    onAdd(place.value, place.data, place.lat, place.lon, "ESP");
+    onAdd(place.value, place.data, place.lat, place.lon);
   };
 
   return (

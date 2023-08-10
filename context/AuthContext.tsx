@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useEffect,
-} from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import axios, { AxiosError } from "axios";
 import { Alert } from "react-native";
 import * as SecureStore from "expo-secure-store";

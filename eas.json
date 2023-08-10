@@ -19,7 +19,8 @@
         "EXPO_PUBLIC_BACKEND_URL": "https://wave-guru-backend.onrender.com/api",
         "EXPO_PUBLIC_TIDE_API_URL": "https://api.stormglass.io/v2/tide/extremes/point",
         "EXPO_PUBLIC_TIDE_API_KEY": "cbb42dee-1ffe-11ee-8d52-0242ac130002-cbb42e5c-1ffe-11ee-8d52-0242ac130002",
-        "EXPO_PUBLIC_TOKEN_KEY_SECURE_STORE": "surfForecastUser"
+        "EXPO_PUBLIC_TOKEN_KEY_SECURE_STORE": "surfForecastUser",
+        "EXPO_PUBLIC_GEOCODING_API_KEY": "9efbae0f26aa42eb880b157ea866a92c"
       }
     },
     "production": {}

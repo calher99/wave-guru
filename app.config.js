@@ -12,6 +12,7 @@ export default {
         tideApiKey: process.env.EXPO_PUBLIC_TIDE_API_KEY,
         tideApiUrl: process.env.EXPO_PUBLIC_TIDE_API_URL,
         tokenSecureStore: process.env.EXPO_PUBLIC_TOKEN_KEY_SECURE_STORE,
+        geocodingApiKey: process.env.EXPO_PUBLIC_GEOCODING_API_KEY,
         eas: {
           projectId: "dcd1320a-3133-4b41-98cc-f4a3b7377095"
       }

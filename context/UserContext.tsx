@@ -20,13 +20,7 @@ interface UserContextInterface {
   isLoading: boolean;
   error: string | null;
   favourites: Place[];
-  onAdd: (
-    value: string,
-    data: number,
-    lat: number,
-    lon: number,
-    countryCode: string
-  ) => void;
+  onAdd: (value: string, data: number, lat: number, lon: number) => void;
   onDelete: (id: string) => void;
   onGetPlaces: () => void;
 }
@@ -55,7 +49,7 @@ interface UserProviderProps {
 }
 
 export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
-  const { backendUrl } = Constants.manifest?.extra || {};
+  const { backendUrl, geocodingApiKey } = Constants.manifest?.extra || {};
   const { authState } = useAuth();
 
   const [height, setHeight] = useState<string>("m");
@@ -66,13 +60,40 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchCountryCode = async (
+    lat: number,
+    lon: number
+  ): Promise<string | null> => {
+    try {
+      const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${geocodingApiKey}`;
+      const response = await axios.get(url);
+
+      // Validate the response
+      if (
+        response.data &&
+        response.data.results &&
+        response.data.results.length > 0
+      ) {
+        const countryCode =
+          response.data.results[0].components["ISO_3166-1_alpha-2"];
+        return countryCode;
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    return null;
+  };
+
   const addPlace = async (
     value: string,
     data: number,
     lat: number,
-    lon: number,
-    countryCode: string
+    lon: number
   ) => {
+    setIsLoading(true);
+    setError(null);
+    const countryCode = await fetchCountryCode(lat, lon);
+
     try {
       const responseData = await axios.post(
         `${backendUrl}/places/add`,
@@ -110,9 +131,12 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
         // return { errorMessage: "An error ocurred" };
       }
     }
+    setIsLoading(false);
   };
 
   const deletePlace = async (id: string) => {
+    setIsLoading(true);
+    setError(null);
     try {
       await axios({
         url: `${backendUrl}/places/delete/${id}`,
@@ -126,11 +150,20 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
         return prev.filter((place) => place.id !== id);
       });
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        setError(error.response.data.message);
+        // return { errorMessage: error.response.data.message };
+      } else {
+        setError("An error occurred during registration");
+        // return { errorMessage: "An error ocurred" };
+      }
     }
+    setIsLoading(false);
   };
 
   const getPlaces = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
       const responseData = await axios.get(`${backendUrl}/places/getPlaces`, {
         headers: {
@@ -160,6 +193,7 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
         // return { errorMessage: "An error ocurred" };
       }
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
