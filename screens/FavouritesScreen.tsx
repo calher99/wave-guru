@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import CountryFlag from "react-native-country-flag";
 import ListSpot from "../components/ui/ListSpot";
 import { BaseSuggestion, Place } from "../types/place";
+import { useUser } from "../context/UserContext";
 
 const FAVOURITES: Place[] = [
   {
@@ -29,10 +30,12 @@ const FAVOURITES: Place[] = [
 ];
 
 const FavouritesScreen = () => {
+  const { favourites } = useUser();
+
   return (
     <View>
       <FlatList
-        data={FAVOURITES}
+        data={favourites}
         renderItem={({ item }) => <ListSpot place={item} type="favourites" />}
         keyExtractor={(item) => item.data.toString()}
       />

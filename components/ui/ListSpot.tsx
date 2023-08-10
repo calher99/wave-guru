@@ -5,16 +5,24 @@ import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../constants/styles";
 import { Place } from "../../types/place";
 import { MaterialIcons } from "@expo/vector-icons";
+import axios from "axios";
+
+import Constants from "expo-constants";
+
+import { useUser } from "../../context/UserContext";
 
 const ListSpot = ({ place, type }: { place: Place; type: string }) => {
+  const { onAdd } = useUser();
+  const { backendUrl } = Constants.manifest?.extra || {};
   const navigation = useNavigation();
 
   const deleteFavouritehandler = () => {
     console.log("delete");
   };
 
-  const selectFavouritehandler = () => {
+  const selectFavouritehandler = async () => {
     console.log("add");
+    onAdd(place.value, place.data, place.lat, place.lon, "ESP");
   };
 
   return (
@@ -28,12 +36,6 @@ const ListSpot = ({ place, type }: { place: Place; type: string }) => {
           ]}
           onPress={() => {
             navigation.navigate("ForecastMain");
-            // navigation.navigate("Test", {
-            //   forecastData: item,
-            //   day: day,
-            //   dayDate: dayDate,
-            // });
-            // console.log("pressed");
           }}
         >
           {type === "favourites" && (
