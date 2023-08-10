@@ -67,7 +67,7 @@ const SettingSelectScreen = ({ route }: { route: SettingsRouteProp }) => {
         >
           <Text>{option.label}</Text>
           {valueSelected === option.value && (
-            <Feather name="check-circle" size={20} color="green" />
+            <Feather name="check-circle" size={18} color="green" />
           )}
         </Pressable>
       ))}

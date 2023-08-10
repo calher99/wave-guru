@@ -61,6 +61,7 @@ export const DropDownSearch = memo(() => {
                   return (
                     <ListSpot
                       place={item}
+                      type="search"
                       //   search={search}
                       //   onPress={(item) => {
                       //     if (user) {

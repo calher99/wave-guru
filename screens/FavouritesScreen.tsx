@@ -33,7 +33,7 @@ const FavouritesScreen = () => {
     <View>
       <FlatList
         data={FAVOURITES}
-        renderItem={({ item }) => <ListSpot place={item} />}
+        renderItem={({ item }) => <ListSpot place={item} type="favourites" />}
         keyExtractor={(item) => item.data.toString()}
       />
     </View>

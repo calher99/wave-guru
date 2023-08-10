@@ -4,33 +4,80 @@ import CountryFlag from "react-native-country-flag";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../constants/styles";
 import { Place } from "../../types/place";
+import { MaterialIcons } from "@expo/vector-icons";
 
-const ListSpot = ({ place }: { place: Place }) => {
+const ListSpot = ({ place, type }: { place: Place; type: string }) => {
   const navigation = useNavigation();
-  console.log(place.value);
+
+  const deleteFavouritehandler = () => {
+    console.log("delete");
+  };
+
+  const selectFavouritehandler = () => {
+    console.log("add");
+  };
+
   return (
-    <Pressable
-      android_ripple={{ color: "#ccc" }}
-      style={({ pressed }) => [
-        pressed ? styles.buttonPressed : null, //Style is only applied when pressed
-      ]}
-      onPress={() => {
-        navigation.navigate("ForecastMain");
-        // navigation.navigate("Test", {
-        //   forecastData: item,
-        //   day: day,
-        //   dayDate: dayDate,
-        // });
-        // console.log("pressed");
-      }}
-    >
-      <View style={styles.container}>
-        {place.countryCode && (
-          <CountryFlag isoCode={place.countryCode} size={15}></CountryFlag>
-        )}
-        <Text style={styles.spotName}>{place.value}</Text>
+    <View style={styles.container}>
+      <View style={styles.containerLeft}>
+        <Pressable
+          android_ripple={{ color: "#ccc" }}
+          style={({ pressed }) => [
+            styles.button,
+            pressed ? styles.buttonPressed : null, //Style is only applied when pressed
+          ]}
+          onPress={() => {
+            navigation.navigate("ForecastMain");
+            // navigation.navigate("Test", {
+            //   forecastData: item,
+            //   day: day,
+            //   dayDate: dayDate,
+            // });
+            // console.log("pressed");
+          }}
+        >
+          {type === "favourites" && (
+            <CountryFlag
+              isoCode={place.countryCode as string}
+              size={15}
+            ></CountryFlag>
+          )}
+          <Text style={styles.spotName}>{place.value}</Text>
+        </Pressable>
       </View>
-    </Pressable>
+      <View style={styles.containerRight}>
+        {type === "search" && (
+          <Pressable
+            android_ripple={{ color: "#ccc" }}
+            style={({ pressed }) => [
+              pressed ? styles.buttonPressed : null, //Style is only applied when pressed
+            ]}
+            onPress={selectFavouritehandler}
+          >
+            <MaterialIcons
+              name="favorite-border"
+              size={24}
+              color={Colors.backgroundDarker}
+            />
+          </Pressable>
+        )}
+        {type === "favourites" && (
+          <Pressable
+            android_ripple={{ color: "#ccc" }}
+            style={({ pressed }) => [
+              pressed ? styles.buttonPressed : null, //Style is only applied when pressed
+            ]}
+            onPress={deleteFavouritehandler}
+          >
+            <MaterialIcons
+              name="delete"
+              size={24}
+              color={Colors.backgroundDarker}
+            />
+          </Pressable>
+        )}
+      </View>
+    </View>
   );
 };
 
@@ -38,10 +85,9 @@ export default ListSpot;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    gap: 15,
+    gap: 5,
     paddingBottom: 10,
     paddingTop: 10,
     paddingLeft: 8,
@@ -50,10 +96,20 @@ const styles = StyleSheet.create({
 
     // alignItems: "flex-start",
   },
+  containerLeft: {
+    flex: 1,
+  },
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+  },
   buttonPressed: {
     opacity: 0.5,
   },
   spotName: {
     fontSize: 17,
+    flex: 1,
   },
+  containerRight: {},
 });
