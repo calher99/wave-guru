@@ -20,7 +20,13 @@ interface UserContextInterface {
   isLoading: boolean;
   error: string | null;
   favourites: Place[];
-  onAdd: (value: string, data: number, lat: number, lon: number) => void;
+  onAdd: (
+    value: string,
+    data: number,
+    lat: number,
+    lon: number,
+    alt: number
+  ) => void;
   onDelete: (id: string) => void;
   onGetPlaces: () => void;
 }
@@ -88,7 +94,8 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
     value: string,
     data: number,
     lat: number,
-    lon: number
+    lon: number,
+    alt: number
   ) => {
     setIsLoading(true);
     setError(null);
@@ -102,6 +109,7 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
           data: data,
           lat: lat,
           lon: lon,
+          alt: alt,
           countryCode: countryCode,
         },
         {
@@ -118,6 +126,7 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
           data: responseData.data.place.data,
           lat: responseData.data.place.lat,
           lon: responseData.data.place.lon,
+          alt: responseData.data.place.alt,
           countryCode: responseData.data.place.countryCode,
         };
         return [...prev, newPlace];
@@ -179,6 +188,7 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
           data: place.data,
           lon: place.lon,
           lat: place.lat,
+          alt: place.alt,
           countryCode: place.countryCode,
         };
       });

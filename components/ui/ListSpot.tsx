@@ -17,7 +17,7 @@ const ListSpot = ({ place, type }: { place: Place; type: string }) => {
   };
 
   const selectFavouritehandler = async () => {
-    onAdd(place.value, place.data, place.lat, place.lon);
+    onAdd(place.value, place.data, place.lat, place.lon, place.alt || 0);
   };
 
   return (
@@ -30,7 +30,9 @@ const ListSpot = ({ place, type }: { place: Place; type: string }) => {
             pressed ? styles.buttonPressed : null, //Style is only applied when pressed
           ]}
           onPress={() => {
-            navigation.navigate("ForecastMain");
+            navigation.navigate("ForecastMain", {
+              placeParam: place,
+            });
           }}
         >
           {type === "favourites" && (

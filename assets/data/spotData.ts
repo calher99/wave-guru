@@ -1,5 +1,26 @@
 export const SPOT_DATA = [
   {
+    value: "Praia de Ribeira d'Ilhas, PRT",
+    data: 10342431,
+    g: "5",
+    type: "G",
+    lat: 38.98767,
+    lon: -9.41969,
+    alt: 38,
+    id_user: -1,
+    category: "beach",
+  },
+  {
+    value: "Spain - San Vicente de la Barquera",
+    data: 207059,
+    g: "3",
+    type: "W",
+    lat: 43.391,
+    lon: -4.372,
+    id_user: 169,
+    alt: 7,
+  },
+  {
     value: "Portugal - Afife",
     data: 48937,
     g: "3",

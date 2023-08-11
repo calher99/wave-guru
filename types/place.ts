@@ -5,6 +5,7 @@ export interface BaseSuggestion {
   id_user?: number;
   lat: number;
   lon: number;
+  alt?: number;
   type?: string;
 }
 

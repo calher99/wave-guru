@@ -3,8 +3,9 @@ import { FlatList, StyleSheet, View } from "react-native";
 import { useForecastData } from "../hooks/useForecastData";
 import ForecastDay from "../components/ForecastData/ForecastDay";
 
-const ForecastMain: React.FunctionComponent = () => {
-  const { data, error } = useForecastData();
+const ForecastMain: React.FunctionComponent = ({ route }) => {
+  const place = route.params.placeParam;
+  const { data, error } = useForecastData(place);
   return (
     <View style={styles.rootContainer}>
       <FlatList

@@ -12,10 +12,12 @@ import uuid from "react-native-uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Constants from "expo-constants";
+import { Place } from "../types/place";
 
 const TIDE_DATA = "surfForecastTideData";
 
-export const useForecastData = () => {
+export const useForecastData = (locationData: Place) => {
+  console.log(locationData);
   const { tideApiKey, tideApiUrl } = Constants.manifest?.extra || {};
 
   const [data, setData] = useState<ForecastDayData[] | null>(null); // replace any with the correct type if you have one
@@ -44,7 +46,7 @@ export const useForecastData = () => {
       const cachedData = JSON.parse(value);
 
       if (cachedData.date === todayDateString) {
-        console.log("cached data", cachedData.data);
+        // console.log("cached data", cachedData.data);
         // If the cached data is from today, use it
         return cachedData.data;
       }
@@ -65,7 +67,7 @@ export const useForecastData = () => {
           },
         }
       );
-      console.log("After API Tides", responseTide.data);
+      // console.log("After API Tides", responseTide.data);
       // Save the data in the AsyncStorage along with the date
       const dataToCache = {
         date: todayDateString,
@@ -79,6 +81,20 @@ export const useForecastData = () => {
     }
   };
   const fetchForecastData = async () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // JS months are 0-indexed
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const hour = String(currentDate.getHours()).padStart(2, "0");
+
+    const dateStr = `${year}${month}${day}`;
+    const initStrValue = `${dateStr}${hour}`;
+    const rundefValue = `${dateStr}${hour}x0x240x0x240-${dateStr}00x243x384x243x384`;
+    console.log("RUNDEF", rundefValue);
+    console.log(
+      "CACHEFIX",
+      `${locationData.lat}x${locationData.lon}x${locationData.alt || 38}`
+    );
     try {
       // Initialize an array to hold the final results
       const responseWind: AxiosResponse<Forecast3data> = await axios.get(
@@ -89,9 +105,11 @@ export const useForecastData = () => {
             id_model: 3,
             rundef: "2023072906x0x240x0x240-2023072900x243x384x243x384",
             initstr: "2023072906",
-            id_spot: 38441,
+            id_spot: locationData.data,
             WGCACHEABLE: 21600,
-            cachefix: "38.93x-9.42x38",
+            cachefix: `${locationData.lat}x${locationData.lon}x${
+              locationData.alt || 38
+            }`,
           },
         }
       );
