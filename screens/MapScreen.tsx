@@ -19,6 +19,7 @@ import {
 import { SPOT_DATA } from "../assets/data/spotData";
 import { BaseSuggestion } from "../types/place";
 import { useNavigation } from "@react-navigation/native";
+import { Colors } from "../constants/styles";
 
 interface MapRegion {
   latitude: number;
@@ -138,10 +139,19 @@ const MapScreen: React.FC = () => {
             </View>
             <Callout
               onPress={() => {
-                navigation.navigate("ForecastMain");
+                navigation.navigate("ForecastMain", {
+                  placeParam: spot,
+                });
               }}
             >
-              <Text style={styles.calloutText}>{spot.value}</Text>
+              <View style={styles.calloutContainer}>
+                <MaterialIcons
+                  name="favorite-border"
+                  size={24}
+                  color={Colors.backgroundDarker}
+                />
+                <Text style={styles.calloutText}>{spot.value}</Text>
+              </View>
             </Callout>
           </Marker>
         ))}
@@ -176,6 +186,11 @@ const styles = StyleSheet.create({
     top: 8,
   },
   image: { width: 30, height: 30 },
+  calloutContainer: {
+    flexDirection: "row",
+
+    gap: 3,
+  },
   calloutText: {
     width: 150,
     flexWrap: "wrap",

@@ -14,37 +14,68 @@ const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
   const gustKmh = Math.round(dataHour.GUST * 1.852);
 
   const getWindSpeedColor = (windSpeed: number) => {
-    if (windSpeed <= 10) {
+    if (windSpeed <= 5) {
       return Colors.strength0;
-    } else if (windSpeed <= 15) {
+    } else if (windSpeed <= 10) {
       return Colors.strength10;
-    } else if (windSpeed <= 20) {
+    } else if (windSpeed <= 15) {
       return Colors.strength15;
-    } else if (windSpeed <= 25) {
+    } else if (windSpeed <= 20) {
       return Colors.strength20;
-    } else if (windSpeed <= 30) {
+    } else if (windSpeed <= 25) {
       return Colors.strength25;
-    } else if (windSpeed <= 35) {
+    } else if (windSpeed <= 30) {
       return Colors.strength30;
-    } else if (windSpeed <= 40) {
+    } else if (windSpeed <= 35) {
       return Colors.strength35;
-    } else if (windSpeed <= 45) {
+    } else if (windSpeed <= 40) {
       return Colors.strength40;
-    } else if (windSpeed <= 50) {
+    } else if (windSpeed <= 45) {
       return Colors.strength45;
-    } else if (windSpeed <= 55) {
+    } else if (windSpeed <= 50) {
       return Colors.strength50;
-    } else if (windSpeed <= 60) {
+    } else if (windSpeed <= 55) {
       return Colors.strength55;
     } else {
       return Colors.strength60;
     }
   };
+  const getWindDirection = (windAngle: number): string => {
+    // Normalize the angle
+    windAngle = windAngle % 360;
 
+    // Ensure the angle is positive
+    if (windAngle < 0) windAngle += 360;
+
+    if (windAngle >= 337.5 || windAngle < 22.5) {
+      return "N";
+    } else if (windAngle >= 22.5 && windAngle < 67.5) {
+      return "NE";
+    } else if (windAngle >= 67.5 && windAngle < 112.5) {
+      return "E";
+    } else if (windAngle >= 112.5 && windAngle < 157.5) {
+      return "SE";
+    } else if (windAngle >= 157.5 && windAngle < 202.5) {
+      return "S";
+    } else if (windAngle >= 202.5 && windAngle < 247.5) {
+      return "SW";
+    } else if (windAngle >= 247.5 && windAngle < 292.5) {
+      return "W";
+    } else {
+      // (windAngle >= 292.5 && windAngle < 337.5)
+      return "NW";
+    }
+  };
+  let hourType;
+  if (dataHour.hour >= 13) {
+    hourType = `${dataHour.hour}:00`;
+  } else {
+    hourType = `07:00`;
+  }
   return (
     <View style={styles.rootContainer}>
       <View style={styles.hourContainer}>
-        <Text style={styles.hour}>{`${dataHour.hour}pm`}</Text>
+        <Text style={styles.hour}>{hourType}</Text>
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.data}>{dataHour.SWELLHGT}</Text>
@@ -101,7 +132,10 @@ const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
             justifyContent: "center",
           }}
         />
-        <Text style={styles.windDirText}>{dataHour.WINDDIR}</Text>
+        {/* <Text style={styles.windDirText}>{dataHour.WINDDIR}</Text> */}
+        <Text style={styles.windDirText}>
+          {getWindDirection(dataHour.WINDDIR)}
+        </Text>
       </View>
     </View>
   );

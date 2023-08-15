@@ -3,6 +3,7 @@ import React from "react";
 import { DropDownSearch } from "../components/ui/DropDownSearch";
 import { useUser } from "../context/UserContext";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
+import NearbySpots from "../components/ui/NearbySpots";
 
 const SearchScreen = () => {
   const { isLoading } = useUser();
@@ -10,9 +11,11 @@ const SearchScreen = () => {
     return <LoadingOverlay message="Adding favourite" />;
   }
   return (
-    <View>
+    <View style={styles.container}>
       {/* <Text style={styles.sectionTitle}>Remote list</Text> */}
       <DropDownSearch />
+      <Text> --- Or --- </Text>
+      <NearbySpots />
     </View>
   );
 };
@@ -20,22 +23,10 @@ const SearchScreen = () => {
 export default SearchScreen;
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flex: 1,
-  },
   container: {
-    padding: 20,
-  },
-  title: {
-    textAlign: "center",
-    fontSize: 25,
-    marginBottom: 50,
-  },
-  section: {
-    marginBottom: 40,
-  },
-  sectionTitle: {
-    fontWeight: "bold",
-    marginBottom: 3,
+    flex: 1,
+    flexDirection: "column",
+    gap: 15,
+    alignItems: "center",
   },
 });

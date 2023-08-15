@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderRightColor: Colors.backgroundDark,
     alignItems: "center",
+    paddingTop: 2,
   },
   day: {
     fontWeight: "bold",
