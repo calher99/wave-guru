@@ -63,8 +63,9 @@ const styles = StyleSheet.create({
   heightInfo: {
     backgroundColor: Colors.logo,
     width: 45,
-    height: 40,
+    height: 45,
     paddingTop: 2,
+    paddingBottom: 2,
     borderTopColor: "white",
     borderTopWidth: 1,
   },
