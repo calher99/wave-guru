@@ -66,16 +66,11 @@ const ForecastHour = ({ dataHour }: { dataHour: ForecastHourData }) => {
       return "NW";
     }
   };
-  let hourType;
-  if (dataHour.hour >= 13) {
-    hourType = `${dataHour.hour}:00`;
-  } else {
-    hourType = `07:00`;
-  }
+  const printableHour = `${String(dataHour.hour).padStart(2, "0")}:00`;
   return (
     <View style={styles.rootContainer}>
       <View style={styles.hourContainer}>
-        <Text style={styles.hour}>{hourType}</Text>
+        <Text style={styles.hour}>{printableHour}</Text>
       </View>
       <View style={styles.subContainer}>
         <Text style={styles.data}>{dataHour.SWELLHGT}</Text>

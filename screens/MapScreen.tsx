@@ -130,7 +130,11 @@ const MapScreen: React.FC = () => {
             key={spot.data}
             coordinate={{ latitude: spot.lat, longitude: spot.lon }}
           >
-            <MaterialIcons name="location-history" size={50} color="blue" />
+            <MaterialIcons
+              name="location-history"
+              size={50}
+              color={Colors.logo}
+            />
             <View style={styles.containerIcon}>
               <Image
                 style={styles.image}
