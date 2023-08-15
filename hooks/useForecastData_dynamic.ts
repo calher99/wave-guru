@@ -12,17 +12,11 @@ import uuid from "react-native-uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Constants from "expo-constants";
-import {
-  Ribeira3,
-  Ribeira84,
-  sanvi3,
-  sanvi84,
-} from "../assets/data/manualData";
 import { Place } from "../types/place";
 
 const TIDE_DATA = "surfForecastTideData";
 
-export const useForecastData = (locationData: Place) => {
+export const useForecastData = (locationData: Place, cacheFix2: string) => {
   const { tideApiKey, tideApiUrl } = Constants.manifest?.extra || {};
 
   const [data, setData] = useState<ForecastDayData[] | null>(null); // replace any with the correct type if you have one
@@ -51,7 +45,7 @@ export const useForecastData = (locationData: Place) => {
       const cachedData = JSON.parse(value);
 
       if (cachedData.date === todayDateString) {
-        console.log("cached data", cachedData.data);
+        // console.log("cached data", cachedData.data);
         // If the cached data is from today, use it
         return cachedData.data;
       }
@@ -72,7 +66,7 @@ export const useForecastData = (locationData: Place) => {
           },
         }
       );
-      console.log("After API Tides", responseTide.data);
+      // console.log("After API Tides", responseTide.data);
       // Save the data in the AsyncStorage along with the date
       const dataToCache = {
         date: todayDateString,
@@ -86,35 +80,51 @@ export const useForecastData = (locationData: Place) => {
     }
   };
   const fetchForecastData = async () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // JS months are 0-indexed
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const hour = String(currentDate.getHours()).padStart(2, "0");
+    let injectHour;
+    let runDefNumber;
+
+    if (+hour < 12) {
+      injectHour = "00";
+      runDefNumber = 243;
+    } else if (12 < +hour && +hour < 23) {
+      injectHour = "06";
+      runDefNumber = 249;
+    }
+
+    const dateStr = `${year}${month}${day}`;
+    const initStrValue = `${dateStr}${injectHour}`;
+    const rundefValue = `${dateStr}${injectHour}x0x240x0x240-${dateStr}00x243x384x${runDefNumber}x384`;
+    const cacheFix = `${locationData.lat}x${locationData.lon}x${
+      locationData.alt || 38
+    }`;
+    console.log(
+      `https://www.windguru.net/int/iapi.php?q=forecast&id_model=${3}&rundef=${rundefValue}&initstr=${initStrValue}&id_spot=${
+        locationData.data
+      }&WGCACHEABLE=${21600}&cachefix=${cacheFix}`
+    );
+
     try {
       // Initialize an array to hold the final results
-      //   const responseWind: AxiosResponse<Forecast3data> = await axios.get(
-      //     "https://www.windguru.net/int/iapi.php",
-      //     {
-      //       params: {
-      //         q: "forecast",
-      //         id_model: 3,
-      //         rundef: "2023081112x0x240x0x240-2023081100x243x384x255x384",
-      //         initstr: "2023081112",
-      //         id_spot: 207059,
-      //         WGCACHEABLE: 21600,
-      //         cachefix: "43.391x-4.372x7",
-      //       },
-      //     }
-      //   );
-      let responseWind;
-      let responseWaves;
-      if (locationData.data === 207059) {
-        responseWind = sanvi3;
-        responseWaves = sanvi84;
-      } else if (locationData.data === 10342431) {
-        responseWind = Ribeira3;
-        responseWaves = Ribeira84;
-      } else {
-        responseWind = Ribeira3;
-        responseWaves = Ribeira84;
-      }
-
+      const responseWind: AxiosResponse<Forecast3data> = await axios.get(
+        "https://www.windguru.net/int/iapi.php",
+        {
+          params: {
+            q: "forecast",
+            id_model: 3,
+            rundef: rundefValue,
+            initstr: initStrValue,
+            id_spot: locationData.data,
+            WGCACHEABLE: 21600,
+            cachefix: cacheFix,
+          },
+        }
+      );
+      console.log("responseWind", responseWind.data.fcst);
       //Set initial Date
       // console.log("Date coming from API", responseWind.data);
       // const initdate = new Date(responseWind.data.fcst.initdate);
@@ -162,22 +172,27 @@ export const useForecastData = (locationData: Place) => {
         });
       }
 
-      //   const responseWaves: AxiosResponse<Forecast84data> = await axios.get(
-      //     "https://www.windguru.net/int/iapi.php",
-      //     {
-      //       params: {
-      //         q: "forecast",
-      //         id_model: 84,
-      //         rundef: "2023081112x0x240x0x240-2023081100x243x384x255x384",
-      //         initstr: "2023081112",
-      //         id_spot: 207059,
-      //         WGCACHEABLE: 21600,
-      //         cachefix: "43.565x-4.374x7",
-      //       },
-      //     }
-      //   );
+      const responseWaves: AxiosResponse<Forecast84data> = await axios.get(
+        "https://www.windguru.net/int/iapi.php",
+        {
+          params: {
+            q: "forecast",
+            id_model: 84,
+            rundef: rundefValue,
+            initstr: initStrValue,
+            id_spot: locationData.data,
+            WGCACHEABLE: 21600,
+            cachefix: cacheFix2,
+          },
+        }
+      );
+      console.log(
+        `https://www.windguru.net/int/iapi.php?q=forecast&id_model=${84}&rundef=${rundefValue}&initstr=${initStrValue}&id_spot=${
+          locationData.data
+        }&WGCACHEABLE=${21600}&cachefix=${cacheFix2}`
+      );
 
-      //   console.log("WAVES", responseWaves);
+      console.log("WAVES", responseWaves.data);
       // Iterate over the hours array for responseWaves
       for (let i = 0; i < responseWaves.data.fcst.hours.length; i++) {
         // Calculate the date for the current timestamp
@@ -234,7 +249,7 @@ export const useForecastData = (locationData: Place) => {
       // setData(filteredData); // set the state
       return filteredData; // added return statement
     } catch (error: any) {
-      console.log(error);
+      console.log("catch block", error);
       setError(error);
       return [];
     }
